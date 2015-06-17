@@ -5,7 +5,7 @@ from peewee import *
 
 from db import User
 
-import users.user
+import users.user as user
 import exceptions
 
 test_db = SqliteDatabase(':memory:')
@@ -19,7 +19,7 @@ class TestUsers(TestCase):
             super(TestUsers, self).run(result)
 
     def create_test_data(self):
-        self._user = users.user.User()
+        self._user = user.User()
         self._user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1)
 
@@ -33,9 +33,9 @@ class TestUsers(TestCase):
         self.assertEqual(self._user.data.authentication_level, 1)
 
     def test_user_delete(self):
-        deleted = self._user.delete()
+        self.create_test_data()
+        deleted = self._user.delete_user()
         self.assertEqual(deleted, 1)
-        self._user.delete()
 
     def test_user_validation(self):
         self.create_test_data()
@@ -52,7 +52,7 @@ class TestUsers(TestCase):
         self._user.change_information('test_password', authentication_level=2, email='test@email.com',
                                       phone_number='1231231234', name='new_name', title='new_title')
         pk = self._user.data.pk
-        self._user_2 = users.user.User(user_pk=pk)
+        self._user_2 = user.User(user_pk=pk)
         self.assertEqual(self._user_2.data.authentication_level, 2)
         self.assertEqual(self._user_2.data.phone_number, '1231231234')
         self.assertEqual(self._user_2.data.name, 'new_name')
@@ -75,17 +75,17 @@ class TestUsers(TestCase):
     def test_get_user_by_pk(self):
         self.create_test_data()
         pk_1 = self._user.data.pk
-        self._user_1 = users.user.User(user_pk=pk_1)
+        self._user_1 = user.User(user_pk=pk_1)
         pk_2 = self._user_1.data.pk
         self.assertEqual(pk_1, pk_2)
-        self.assertRaises(exceptions.UserInvalid, users.user.User, user_pk=1000)
+        self.assertRaises(exceptions.UserInvalid, user.User, user_pk=1000)
 
     def test_get_user_by_email(self):
         self.create_test_data()
         email = 'ryan@test.com'
-        self._user_1 = users.user.User(email=email)
+        self._user_1 = user.User(email=email)
         # should raise an exception.
-        self.assertRaises(exceptions.UserInvalid, users.user.User, email='doesnotexist@test.com')
+        self.assertRaises(exceptions.UserInvalid, user.User, email='doesnotexist@test.com')
 
 
 suite = TestLoader().loadTestsFromTestCase(TestUsers)

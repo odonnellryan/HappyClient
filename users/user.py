@@ -5,7 +5,6 @@ from bcrypt import gensalt, hashpw
 class User:
 
     def __init__(self, user_pk=None, email=None):
-        super().__init__()
         if user_pk:
             try:
                 self.data = db.User.select().where(db.User.pk == user_pk).get()
@@ -43,9 +42,9 @@ class User:
                                         password=password, email=email, title=title, secret_question=secret_question,
                                         secret_answer=secret_answer, phone_number=phone_number)
 
-    def delete(self):
+    def delete_user(self):
         if self.data:
-            return self.data.delete()
+            return self.data.delete_instance()
         else:
             raise exceptions.UserInvalid
 
@@ -85,3 +84,10 @@ class User:
             if phone_number:
                 self.data.phone_number = phone_number
             self.data.save()
+
+    def get_companies(self):
+        companies = (db.Company.select()
+                    .join(db.UserCompany)
+                    .join(db.User)
+                    .where(db.User.pk == self.data.pk))
+        return companies

@@ -1,10 +1,9 @@
 from peewee import IntegerField, Model, TextField, PrimaryKeyField, \
     PostgresqlDatabase, ForeignKeyField, DecimalField, DateTimeField
-
 import config
 
-database = PostgresqlDatabase(config.database['database'],
-                              user=config.database['username'], passwd=config.database['password'])
+database = PostgresqlDatabase(config.database['database'], user=config.database['username'],
+                              passwd=config.database['password'])
 
 
 class HappyClient(Model):
@@ -18,11 +17,11 @@ class Company(HappyClient):
     phone_number = TextField(null=False, default=None)
     address = TextField(null=True, default=None)
 
+
 class User(HappyClient):
     pk = PrimaryKeyField()
     # 1 = owner, 2 = admin, 3 = user
     authentication_level = IntegerField(null=False, default=3)
-    company = ForeignKeyField(Company, null=True, related_name='users')
     name = TextField(null=False, default=None)
     password = TextField(null=False, default=None)
     email = TextField(null=False, default=None)
@@ -31,6 +30,12 @@ class User(HappyClient):
     secret_question = TextField(null=False, default=None)
     secret_answer = TextField(null=False, default=None)
     phone_number = TextField(null=False, default=None)
+
+
+class UserCompany(HappyClient):
+    company = ForeignKeyField(Company, related_name='companies')
+    user = ForeignKeyField(User, related_name='users')
+
 
 class Client(HappyClient):
     pk = PrimaryKeyField()
