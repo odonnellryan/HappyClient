@@ -25,12 +25,12 @@ class TestUsers(TestCase):
 
     def test_user_creation(self):
         self.create_test_data()
-        self.assertEqual(self._user._user.name, 'test_name')
-        self.assertEqual(self._user._user.email, 'ryan@test.com')
-        self.assertEqual(self._user._user.title, 'the_boss')
-        self.assertEqual(self._user._user.secret_question, 'what is the answer?')
-        self.assertEqual(self._user._user.phone_number, '1234567891')
-        self.assertEqual(self._user._user.authentication_level, 1)
+        self.assertEqual(self._user.data.name, 'test_name')
+        self.assertEqual(self._user.data.email, 'ryan@test.com')
+        self.assertEqual(self._user.data.title, 'the_boss')
+        self.assertEqual(self._user.data.secret_question, 'what is the answer?')
+        self.assertEqual(self._user.data.phone_number, '1234567891')
+        self.assertEqual(self._user.data.authentication_level, 1)
 
     def test_user_delete(self):
         deleted = self._user.delete()
@@ -51,12 +51,12 @@ class TestUsers(TestCase):
         self.create_test_data()
         self._user.change_information('test_password', authentication_level=2, email='test@email.com',
                                       phone_number='1231231234', name='new_name', title='new_title')
-        pk = self._user._user.pk
+        pk = self._user.data.pk
         self._user_2 = users.user.User(user_pk=pk)
-        self.assertEqual(self._user_2._user.authentication_level, 2)
-        self.assertEqual(self._user_2._user.phone_number, '1231231234')
-        self.assertEqual(self._user_2._user.name, 'new_name')
-        self.assertEqual(self._user_2._user.title, 'new_title')
+        self.assertEqual(self._user_2.data.authentication_level, 2)
+        self.assertEqual(self._user_2.data.phone_number, '1231231234')
+        self.assertEqual(self._user_2.data.name, 'new_name')
+        self.assertEqual(self._user_2.data.title, 'new_title')
 
     def test_user_change_password(self):
         self.create_test_data()
@@ -74,9 +74,9 @@ class TestUsers(TestCase):
 
     def test_get_user_by_pk(self):
         self.create_test_data()
-        pk_1 = self._user._user.pk
+        pk_1 = self._user.data.pk
         self._user_1 = users.user.User(user_pk=pk_1)
-        pk_2 = self._user_1._user.pk
+        pk_2 = self._user_1.data.pk
         self.assertEqual(pk_1, pk_2)
         self.assertRaises(exceptions.UserInvalid, users.user.User, user_pk=1000)
 
