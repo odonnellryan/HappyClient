@@ -30,11 +30,7 @@ class User(HappyClient):
     secret_question = TextField(null=False, default=None)
     secret_answer = TextField(null=False, default=None)
     phone_number = TextField(null=False, default=None)
-
-
-class UserCompany(HappyClient):
-    company = ForeignKeyField(Company, related_name='companies')
-    user = ForeignKeyField(User, related_name='users')
+    company = ForeignKeyField(Company, related_name='company')
 
 
 class Client(HappyClient):

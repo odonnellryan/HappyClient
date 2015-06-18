@@ -21,21 +21,7 @@ class Company:
             raise exceptions.UserInvalid
 
     def check_user_authentication(self, user):
-        try:
-            company = (db.Company
-                        .select()
-                        .join(db.UserCompany)
-                        .join(db.User)
-                        .where(db.Company.pk == self.data.pk)
-                        #.switch(db.User)
-                        .where(db.User.pk == user.pk)
-                        .get())
-            if company:
-                return True
-        except db.Company.DoesNotExist:
-                return False
-
-
+        return user.data.company.pk == self.data.pk
 
     def change_information(self, phone_number=None, address=None, name=None):
         if address:

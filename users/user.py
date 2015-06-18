@@ -21,7 +21,7 @@ class User:
             self.data = None
 
     def create_user(self, name, plaintext_password, email, title, secret_question, plaintext_secret_answer,
-                    phone_number, authentication_level=None):
+                    phone_number, company, authentication_level=None):
         email = email.strip().lower()
         try:
             _user = db.User.select().where(db.User.email == email).get()
@@ -38,9 +38,10 @@ class User:
             # auth level of 3 is a basic user, default level.
             if not authentication_level:
                 authentication_level = 3
+
             self.data = db.User.create(authentication_level=authentication_level, name=name,
                                         password=password, email=email, title=title, secret_question=secret_question,
-                                        secret_answer=secret_answer, phone_number=phone_number)
+                                        secret_answer=secret_answer, phone_number=phone_number, company=company.data)
 
     def delete_user(self):
         if self.data:
@@ -85,9 +86,5 @@ class User:
                 self.data.phone_number = phone_number
             self.data.save()
 
-    def get_companies(self):
-        companies = (db.Company.select()
-                    .join(db.UserCompany)
-                    .join(db.User)
-                    .where(db.User.pk == self.data.pk))
-        return companies
+    def get_company(self):
+        return self.data.company

@@ -7,7 +7,6 @@ from db import Company, User
 
 import users.user as user
 import crm.company as company
-import exceptions
 
 test_db = SqliteDatabase(':memory:')
 class TestCompanies(TestCase):
@@ -28,10 +27,15 @@ class TestCompanies(TestCase):
         self.assertEqual(self._company.data.address, '123 test road, testville test')
 
     def test_company_authentication(self):
+        self.create_test_data()
         _user = user.User()
         _user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
-                               '1234567891', authentication_level=1)
-        self.create_test_data()
+                               '1234567891', authentication_level=1, company=self._company)
+        self.assertTrue(self._company.check_user_authentication(_user))
+        self._other_company = company.Company()
+        self._other_company.create_company('test_name2', '12234567893', '123 test road4, testville test')
+        self.assertNotEqual(self._other_company.data.pk, self._company.data.pk)
+        self.assertFalse(self._other_company.check_user_authentication(_user))
 
 
 suite = TestLoader().loadTestsFromTestCase(TestCompanies)

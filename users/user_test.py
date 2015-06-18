@@ -3,9 +3,10 @@ from playhouse.test_utils import test_database
 
 from peewee import *
 
-from db import User
+from db import User, Company
 
 import users.user as user
+import crm.company as company
 import exceptions
 
 test_db = SqliteDatabase(':memory:')
@@ -15,13 +16,15 @@ class TestUsers(TestCase):
 
     # this override makes it so we don't need to use the context manager for each call
     def run(self, result=None):
-        with test_database(test_db, (User,)):
+        with test_database(test_db, (User, Company)):
             super(TestUsers, self).run(result)
 
     def create_test_data(self):
         self._user = user.User()
+        self._company = company.Company()
+        self._company.create_company('test_name', '1223456789', '123 test road, testville test')
         self._user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
-                               '1234567891', authentication_level=1)
+                               '1234567891', authentication_level=1, company=self._company)
 
     def test_user_creation(self):
         self.create_test_data()
@@ -87,6 +90,9 @@ class TestUsers(TestCase):
         # should raise an exception.
         self.assertRaises(exceptions.UserInvalid, user.User, email='doesnotexist@test.com')
 
+    def test_get_company(self):
+        self.create_test_data()
+        self.assertEqual(self._company.data.pk, self._user.data.company.pk)
 
 suite = TestLoader().loadTestsFromTestCase(TestUsers)
 TextTestRunner(verbosity=2).run(suite)
