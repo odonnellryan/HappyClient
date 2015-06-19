@@ -1,7 +1,7 @@
 from peewee import IntegerField, Model, TextField, PrimaryKeyField, \
     PostgresqlDatabase, ForeignKeyField, DecimalField, DateTimeField
 import config
-
+import datetime
 database = PostgresqlDatabase(config.database['database'], user=config.database['username'],
                               passwd=config.database['password'])
 
@@ -30,7 +30,7 @@ class User(HappyClient):
     secret_question = TextField(null=False, default=None)
     secret_answer = TextField(null=False, default=None)
     phone_number = TextField(null=False, default=None)
-    company = ForeignKeyField(Company, related_name='company')
+    company = ForeignKeyField(Company, related_name='users')
 
 
 class Client(HappyClient):
@@ -40,15 +40,19 @@ class Client(HappyClient):
     location = TextField(null=True)
     notes = TextField(null=True)
     interaction_reminder = DateTimeField(formats='%Y-%m-%d %H:%M')
+    company = ForeignKeyField(Company, related_name='clients')
+    user = ForeignKeyField(User, related_name="clients")
 
 
 class Interaction(HappyClient):
     pk = PrimaryKeyField()
     client = ForeignKeyField(Client, related_name="interactions")
+    company = ForeignKeyField(Company, related_name="interactions")
     notes = TextField(null=True)
     # you will rate the interaction 0-5 depending on how well it went
     rating = IntegerField()
     # if a sale was closed you will put in the dollar amount here
     sale = DecimalField(decimal_places=2)
-    time = DateTimeField(formats='%Y-%m-%d %H:%M')
+    time = DateTimeField(default=datetime.datetime.now)
     money_owed = DecimalField(decimal_places=2)
+    user = ForeignKeyField(User, related_name="interactions")

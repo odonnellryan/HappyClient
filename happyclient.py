@@ -1,8 +1,9 @@
 from flask import Flask
 from flask.ext.login import LoginManager
 from users import user
+from peewee import *
 app = Flask(__name__)
-
+database = PostgresqlDatabase('my_app.db')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -10,6 +11,14 @@ login_manager.init_app(app)
 def load_user(user_id):
     return user.User(user_id)
 
+@app.before_request
+def _db_connect():
+    database.connect()
+
+@app.teardown_request
+def _db_close(exc):
+    if not database.is_closed():
+        database.close()
 
 @app.route('/')
 def hello_world():
@@ -24,3 +33,8 @@ if not app.debug:
 
 if __name__ == '__main__':
     app.run()
+
+from flask import Flask
+
+
+
