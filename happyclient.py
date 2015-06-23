@@ -36,5 +36,6 @@ if __name__ == '__main__':
 
 from flask import Flask
 
+import codecs
 
 

@@ -39,7 +39,8 @@ class Client(HappyClient):
     contact_information = TextField(null=False)
     location = TextField(null=True)
     notes = TextField(null=True)
-    interaction_reminder = DateTimeField(formats='%Y-%m-%d %H:%M')
+    interaction_reminder_time = DateTimeField(formats='%Y-%m-%d %H:%M', null=True, default=None)
+    interaction_reminder_notes = TextField(null=True)
     company = ForeignKeyField(Company, related_name='clients')
     user = ForeignKeyField(User, related_name="clients")
 

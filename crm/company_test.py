@@ -1,6 +1,6 @@
 from unittest import TestCase, TestLoader, TextTestRunner
 from playhouse.test_utils import test_database
-
+import exceptions
 from peewee import *
 
 from db import Company, User
@@ -32,10 +32,31 @@ class TestCompanies(TestCase):
         _user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1, company=self._company)
         self.assertTrue(self._company.check_user_authentication(_user))
-        self._other_company = company.Company()
-        self._other_company.create_company('test_name2', '12234567893', '123 test road4, testville test')
-        self.assertNotEqual(self._other_company.data.pk, self._company.data.pk)
-        self.assertFalse(self._other_company.check_user_authentication(_user))
+        _other_company = company.Company()
+        _other_company.create_company('test_name2', '12234567893', '123 test road4, testville test')
+        self.assertNotEqual(_other_company.data.pk, self._company.data.pk)
+        self.assertFalse(_other_company.check_user_authentication(_user))
+
+    def test_get_company(self):
+        self.create_test_data()
+        _user = user.User()
+        _user.create_user('test_nam4545e3', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+                               '1234567891', authentication_level=1, company=self._company)
+        _other_company = company.Company()
+        _other_company.create_company('test_name2', '12234567893', '123 test road4, testville test')
+        self.assertFalse((_other_company.data == _user.data.company))
+        _other_user = user.User()
+        _other_user.create_user('testame34', 'test_password', 'ryan3@test.com', 'the_boss', 'what is the answer?', '42',
+                               '1234567891', authentication_level=1, company=_other_company)
+        self.assertEqual(_other_company.data.pk, _other_user.data.company.pk)
+        _test_company = company.Company(user=_other_user)
+        self.assertEqual(_test_company.data.pk, _other_company.data.pk)
+
+    def test_change_information(self):
+        pass
+
+
+
 
 
 suite = TestLoader().loadTestsFromTestCase(TestCompanies)

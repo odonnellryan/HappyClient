@@ -1,17 +1,24 @@
 import db, peewee, exceptions
 from bcrypt import gensalt, hashpw
 
-
 class User:
 
-    def __init__(self, user_pk=None, email=None):
-        if user_pk:
+    """
+
+        This is the class that owns the user object.
+        User data is stored in self.data.
+        This is used by both the user and by admins (users will of course need to authenticate)
+
+
+    """
+
+    def __init__(self, plaintext_password=None, user_pk=None, email=None, admin=None):
+        if user_pk and (plaintext_password or admin):
             try:
                 self.data = db.User.select().where(db.User.pk == user_pk).get()
-            except db.User.DoesNotExist:
-                raise exceptions.UserInvalid
-
-        elif email:
+            except db.User.DoesNotExist as e:
+                raise exceptions.UserInvalid(e)
+        elif email and (plaintext_password or admin):
             email = email.strip().lower()
             try:
                 self.data = db.User.select().where(db.User.email == email).get()
@@ -19,6 +26,10 @@ class User:
                 raise exceptions.UserInvalid(e)
         else:
             self.data = None
+
+        if self.data:
+            if not self.validate_login(plaintext_password=plaintext_password, admin=admin):
+                self.data = None
 
     def create_user(self, name, plaintext_password, email, title, secret_question, plaintext_secret_answer,
                     phone_number, company, authentication_level=None):
@@ -49,25 +60,32 @@ class User:
         else:
             raise exceptions.UserInvalid
 
-    def validate_login(self, plaintext_password):
-        if self.data:
-            if hashpw(plaintext_password.encode('utf-8'), self.data.password) == self.data.password:
-                return True
-            else:
-                return False
-
     def validate_secret(self, plaintext_secret_answer):
         if self.data:
             plaintext_secret_answer = ("".join(plaintext_secret_answer.split())).lower().encode('utf-8')
             if hashpw(plaintext_secret_answer, self.data.secret_answer) == self.data.secret_answer:
                 return True
-            else:
-                return False
+        return False
 
-    def change_information(self, plaintext_password, authentication_level=None, name=None, email=None, title=None,
+    def validate_login(self, plaintext_password=None, admin=None):
+        if admin:
+            if admin.data.authentication_level == 1 and admin.data.company.pk == self.data.company.pk:
+                return True
+        if plaintext_password:
+            try:
+                _plaintext_password = plaintext_password.encode('utf-8')
+            except: _plaintext_password = plaintext_password
+            try:
+                _hash = self.data.password.encode('utf-8')
+            except: _hash = self.data.password
+            if hashpw(_plaintext_password, _hash) == _hash:
+                return True
+        return False
+
+    def change_information(self, plaintext_password=None, admin=None, authentication_level=None, name=None, email=None, title=None,
                            secret_question=None, plaintext_secret_answer=None, phone_number=None,
                            new_plaintext_password=None):
-        if self.validate_login(plaintext_password):
+        if self.validate_login(plaintext_password=plaintext_password, admin=admin):
             if authentication_level:
                 self.data.authentication_level = authentication_level
             if new_plaintext_password:

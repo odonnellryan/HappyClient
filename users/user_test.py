@@ -24,6 +24,9 @@ class TestUsers(TestCase):
         self._company = company.Company()
         self._company.create_company('test_name', '1223456789', '123 test road, testville test')
         self._user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+                               '1234567891', authentication_level=3, company=self._company)
+        self._admin = user.User()
+        self._admin.create_user('admin', 'test_password', 'admin@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1, company=self._company)
 
     def test_user_creation(self):
@@ -33,7 +36,7 @@ class TestUsers(TestCase):
         self.assertEqual(self._user.data.title, 'the_boss')
         self.assertEqual(self._user.data.secret_question, 'what is the answer?')
         self.assertEqual(self._user.data.phone_number, '1234567891')
-        self.assertEqual(self._user.data.authentication_level, 1)
+        self.assertEqual(self._user.data.authentication_level, 3)
 
     def test_user_delete(self):
         self.create_test_data()
@@ -42,7 +45,7 @@ class TestUsers(TestCase):
 
     def test_user_validation(self):
         self.create_test_data()
-        self.assertTrue(self._user.validate_login('test_password'))
+        self.assertTrue(self._user.validate_login(plaintext_password='test_password'))
 
     def test_user_secret_question(self):
         self.create_test_data()
@@ -55,7 +58,7 @@ class TestUsers(TestCase):
         self._user.change_information('test_password', authentication_level=2, email='test@email.com',
                                       phone_number='1231231234', name='new_name', title='new_title')
         pk = self._user.data.pk
-        self._user_2 = user.User(user_pk=pk)
+        self._user_2 = user.User(user_pk=pk, admin=self._admin)
         self.assertEqual(self._user_2.data.authentication_level, 2)
         self.assertEqual(self._user_2.data.phone_number, '1231231234')
         self.assertEqual(self._user_2.data.name, 'new_name')
@@ -64,8 +67,9 @@ class TestUsers(TestCase):
     def test_user_change_password(self):
         self.create_test_data()
         self._user.change_information('test_password', new_plaintext_password='new_password')
-        self.assertFalse(self._user.validate_login('test_password'))
-        self.assertTrue(self._user.validate_login('new_password'))
+
+        self.assertFalse(self._user.validate_login(plaintext_password='test_password'))
+        self.assertTrue(self._user.validate_login(plaintext_password='new_password'))
 
     def test_user_change_secret_question(self):
         self.create_test_data()
@@ -78,17 +82,24 @@ class TestUsers(TestCase):
     def test_get_user_by_pk(self):
         self.create_test_data()
         pk_1 = self._user.data.pk
-        self._user_1 = user.User(user_pk=pk_1)
-        pk_2 = self._user_1.data.pk
+        _user = user.User(user_pk=pk_1)
+        self.assertIsNone(_user.data)
+        _user3 = user.User(user_pk=pk_1, plaintext_password='test_password')
+        pk_2 = _user3.data.pk
         self.assertEqual(pk_1, pk_2)
-        self.assertRaises(exceptions.UserInvalid, user.User, user_pk=1000)
+        #self.assertRaises(exceptions.UserInvalid, user.User, user_pk=1000, plaintext_password='test_password')
 
     def test_get_user_by_email(self):
         self.create_test_data()
         email = 'ryan@test.com'
-        self._user_1 = user.User(email=email)
+        # need password to get user, this should be none
+        _user_1 = user.User(email=email)
+        self.assertIsNone(_user_1.data)
+        _user_12 = user.User(email=email, plaintext_password='test_password')
+        self.assertEqual(_user_12.data.pk, self._user.data.pk)
         # should raise an exception.
-        self.assertRaises(exceptions.UserInvalid, user.User, email='doesnotexist@test.com')
+        #self.assertRaises(exceptions.UserInvalid, user.User, email='doesnotexist@test.com',
+#                          plaintext_password='test_password')
 
     def test_get_company(self):
         self.create_test_data()

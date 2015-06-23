@@ -1,16 +1,12 @@
 import db, exceptions
 
 class Company:
-    def __init__(self, company_pk=None, user=None):
-        if company_pk and user:
+    def __init__(self, user=None):
+        if user:
             try:
-                self.data = db.Company.select.where(db.Company.pk == company_pk)
+                self.data = db.Company.select().where(db.Company.pk == user.data.company.pk).get()
             except db.Company.DoesNotExist:
                 raise exceptions.CompanyInvalid
-            if self.check_user_authentication(user):
-                pass
-            else:
-                self.data = None
         else:
             self.data = None
 
