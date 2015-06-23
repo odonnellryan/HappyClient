@@ -7,6 +7,8 @@ database = PostgresqlDatabase('my_app.db')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# this does not currently do much... will work on the web side after we have a basic app.
+
 @login_manager.user_loader
 def load_user(user_id):
     return user.User(user_id)
