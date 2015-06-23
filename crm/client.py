@@ -1,4 +1,6 @@
-import db, exceptions
+import db
+import exceptions
+
 
 class Client:
     def __init__(self, client_pk=None, user=None):
