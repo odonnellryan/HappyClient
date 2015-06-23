@@ -1,6 +1,7 @@
 class UserExists(Exception): pass
 class UserInvalid(Exception): pass
 
+class CompanyExists(Exception): pass
 class CompanyInvalid(Exception): pass
 class CompanyAccessError(Exception): pass
 
@@ -9,3 +10,4 @@ class InteractionAccessError(Exception): pass
 
 class ClientInvalid(Exception): pass
 class ClientAccessError(Exception): pass
+class ClientExists(Exception): pass

@@ -53,7 +53,15 @@ class TestCompanies(TestCase):
         self.assertEqual(_test_company.data.pk, _other_company.data.pk)
 
     def test_change_information(self):
-        pass
+        self.create_test_data()
+        _user = user.User()
+        _user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+                               '1234567891', authentication_level=1, company=self._company)
+        self._company.change_information(_user, name="testing_name", phone_number="9999999999", address="test_location")
+        _test_company = company.Company(user=_user)
+        self.assertEqual(_test_company.data.name, "testing_name")
+        self.assertEqual(_test_company.data.phone_number, "9999999999")
+        self.assertEqual(_test_company.data.address, "test_location")
 
 
 
