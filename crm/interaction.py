@@ -1,32 +1,31 @@
-import db, exceptions
+import db
+from exceptions import InteractionInvalid
+
 
 class Interaction:
     def __init__(self, interaction_pk=None, user=None):
         if interaction_pk and user:
             try:
-                self.data = db.Interaction.select.where(db.Interaction.pk == interaction_pk)
+                self.data = (db.Interaction.select()
+                             .where(db.Interaction.pk == interaction_pk)
+                             .where(db.Interaction.company.pk == user.data.company.pk)
+                             .get())
             except db.Interaction.DoesNotExist:
-                raise exceptions.InteractionInvalid
-            if self.check_user_authentication(user):
-                pass
-            else:
-                self.data = None
+                raise InteractionInvalid
         else:
             self.data = None
 
-    def create_interaction(self, client, rating, sale, money_owed, user, notes=None):
-        if not self.data:
-            if client.data in self.data.user.clients:
-                    self.data = db.Interaction.create(client=client.data, company=user.data.company, rating=rating,
-                                                      sale=sale, money_owed=money_owed, notes=notes, user=user.data)
-                    return True
-            else: return False
+    def create_interaction(self, user, client, rating, sale, money_owed, notes=None):
+        if not self.data and (client.data in self.data.user.clients):
+            self.data = db.Interaction.create(client=client.data, company=client.data.company, rating=rating,
+                                              sale=sale, money_owed=money_owed, notes=notes, user=user.data)
+            return True
 
     def delete(self):
         if self.data:
             return self.data.delete_instance()
         else:
-            raise exceptions.UserInvalid
+            raise InteractionInvalid("Cannot modify invalid interaction.")
 
     def check_user_authentication(self, user):
         return user.data.company.pk == self.data.company.pk
@@ -44,5 +43,7 @@ class Interaction:
             self.data.money_owed = money_owed
         if notes:
             self.data.notes = notes
+        if user and user.data.company.pk == self.data.company.pk:
+            self.data.user = user
 
         return self.data.save()

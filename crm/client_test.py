@@ -32,10 +32,10 @@ class TestClients(unittest.TestCase):
         self.assertEqual(self._client.data.name, 'test_client')
         self.assertEqual(self._client.data.contact_information, 'contact info')
 
-    def test_company_authentication(self):
+    def test_client_authentication(self):
         self.fail("Not yet implemented")
 
-    def test_get_company(self):
+    def test_get_client(self):
         self.fail("Not yet implemented")
 
     def test_change_information(self):

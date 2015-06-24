@@ -4,12 +4,9 @@ from bcrypt import gensalt, hashpw
 class User:
 
     """
-
         This is the class that owns the user object.
         User data is stored in self.data.
         This is used by both the user and by admins (users will of course need to authenticate)
-
-
     """
 
     def __init__(self, plaintext_password=None, user_pk=None, email=None, admin=None):

@@ -7,8 +7,10 @@ class Client:
         if client_pk and user:
             try:
                 # obviously we ony want to be able to access the client if the user is permitted.
-                self.data = (db.Client.select().where(db.Client.pk == client_pk)
-                             .where(db.Client.company.pk == user.data.company.pk))
+                self.data = (db.Client.select()
+                             .where(db.Client.pk == client_pk)
+                             .where(db.Client.company.pk == user.data.company.pk)
+                             .get())
             except db.Client.DoesNotExist:
                 raise exceptions.ClientInvalid
         else:
