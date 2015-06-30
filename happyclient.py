@@ -2,11 +2,15 @@ from flask import Flask
 from flask.ext.login import LoginManager
 from user import user
 from peewee import *
+
+from views import users
+
 app = Flask(__name__)
 database = PostgresqlDatabase('my_app.db')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+app.register_blueprint(users.users)
 # this does not currently do much... will work on the web side after we have a basic app.
 
 
