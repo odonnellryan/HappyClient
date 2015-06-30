@@ -30,7 +30,7 @@ class User(HappyClient):
     secret_question = TextField(null=False, default=None)
     secret_answer = TextField(null=False, default=None)
     phone_number = TextField(null=False, default=None)
-    company = ForeignKeyField(Company, related_name='users')
+    company = ForeignKeyField(Company, related_name='user')
 
 
 class Client(HappyClient):

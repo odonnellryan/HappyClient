@@ -5,7 +5,7 @@ from peewee import *
 
 from db import Company, User
 
-import users.user as user
+import user.user as user
 import crm.company as company
 
 test_db = SqliteDatabase(':memory:')

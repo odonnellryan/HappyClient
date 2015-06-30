@@ -5,7 +5,7 @@ from peewee import *
 
 from db import User, Company
 
-import users.user as user
+import user.user as user
 import crm.company as company
 import exceptions
 

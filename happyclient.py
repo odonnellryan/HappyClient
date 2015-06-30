@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.login import LoginManager
-from users import user
+from user import user
 from peewee import *
 app = Flask(__name__)
 database = PostgresqlDatabase('my_app.db')
@@ -9,8 +9,10 @@ login_manager.init_app(app)
 
 # this does not currently do much... will work on the web side after we have a basic app.
 
+
 @login_manager.user_loader
 def load_user(user_id):
+    # this exists for flask-login
     return user.User(user_id)
 
 @app.before_request
@@ -35,9 +37,5 @@ if not app.debug:
 
 if __name__ == '__main__':
     app.run()
-
-from flask import Flask
-
-import codecs
 
 
