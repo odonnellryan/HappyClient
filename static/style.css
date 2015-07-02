@@ -1,4 +1,4 @@
-html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -65,7 +65,7 @@ a {
 blockquote {
     margin: 1em 1em;
     padding: .5em 1em;
-    border-left: 5px solid #004A66;
+    border-left: 5px solid #007090;
 }
 
 blockquote p {
@@ -121,14 +121,14 @@ a {
 }
 
 a:hover {
-    color: #f42a00;
+    color: #f46700;
 }
 
 hr {
     margin: 2em auto;
     border: 0;
     border-bottom: 1px dashed #ccc;
-    background-color: #004A66;
+    background-color: #007090;
 }
 
 /* below are element-styles */
@@ -194,7 +194,7 @@ input.image[type="checkbox"]:checked + label:before {
     font-weight: bold;
 }
 
-.logout {
+.gray-box-button {
     display: inline-block;
     color: gray;
     padding: .25em;
@@ -203,24 +203,46 @@ input.image[type="checkbox"]:checked + label:before {
     margin: .5em;
 }
 
-.login-bar {
-    height: 2em;
-}
-
 .post_tag_holder {
     text-align: center;
 }
 
-div.photo a {
-    background-color: lightgray;
-    background-image: url('/static/imgs/logo.jpg');
-    background-size: 7em;
-    width: 7em;
-    height: 7em;
-    border-radius: 7em;
-    margin: 0 auto;
-    margin-top: 1em;
+div.logo{
+    padding-left:.25em;
+    padding-top:.5em;
+    margin-right:-.25em;
+    padding-right:-.25em;
+}
+
+a.logo {
+    background-image: url('/static/img/logo.png');
+    background-size: 10em;
+    background-repeat: no-repeat;
+    width: 10em;
+    height: 2em;
     display: block;
+}
+
+div.action-bar {
+    padding:.5em;
+    margin-left:-1em;
+}
+
+.orange-box-button {
+    color: #fff;
+    padding-top:.2em;
+    padding-bottom: .3em;
+    padding-left: .5em;
+    padding-right: .5em;
+    margin-left:.5em;
+    display: inline-block;
+    background-color:  #FF8400;
+    border-radius: .5em;
+}
+
+.orange-box-button:hover {
+    color: #fff;
+    background-color: #f42a00;
 }
 
 span.display_tag {
@@ -245,33 +267,6 @@ span.tags a {
 
 span.tags a:hover {
     background-color: #79CEED;
-}
-
-#post_title {
-    font-size: 1em;
-    padding: 1em;
-    width: 100%;
-    height: 1.5em;
-}
-
-#render_title {
-    padding: 16px;
-    font-weight: bolder;
-    font-size: 2em;
-    color: #000;
-    padding-top: .5em;
-}
-
-#post_body {
-    font-size: 1em;
-    padding: 1em;
-    width: 100%;
-    max-width: 100%;
-    height: 20em;
-}
-
-#render_body {
-    padding: 1em;
 }
 
 /* button stylings */
@@ -351,21 +346,6 @@ span.tags a:hover {
 
 /* additional div styling */
 
-.post-body {
-    padding-top:1em;
-}
-.post-box {
-    display:inline-block;
-}
-.box {
-    border-radius: 10px;
-    padding:1em;
-    margin:1em;
-    display:inline-block;
-    text-align:left;
-    width:auto;
-}
-
 .center {
     margin: auto;
     text-align: center;
@@ -380,7 +360,7 @@ span.tags a:hover {
 }
 
 .blue {
-    background-color: #007099;
+    background-color: #007090;
 }
 
 .light-blue {
@@ -407,38 +387,11 @@ span.tags a:hover {
     background-color: #fff;
 }
 
-.header-color-box {
-    float: left;
-    height: .4em;
-}
-
-.header {
-    background-color: #fff;
-    font-size: 1.5em;
-    max-width: 1000px;
-    text-align: center;
-    margin: 0 auto;
-}
-.content  {
-    display:block;
-    margin: 0 auto;
-    max-width: 900px;
-}
 .main {
     margin: 0 auto;
     padding-left: 2em;
     padding-top: 1em;
     padding-right: 2em;
-}
-
-.post-content {
-    margin: 0 auto;
-    padding-top: 2em;
-}
-
-.post-link {
-    float: right;
-    display: block;
 }
 
 .position-right {

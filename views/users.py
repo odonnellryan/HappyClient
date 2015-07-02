@@ -7,13 +7,16 @@ def home():
     # user homepage
     return render_template('user/home.html')
 
+
 @users.route('/register/')
 def register():
     return render_template('user/register.html')
 
+
 @users.route('/login/')
 def login():
     return render_template('user/login.html')
+
 
 @users.route('/profile/')
 def profile():

@@ -36,7 +36,7 @@ class User(HappyClient):
 class Client(HappyClient):
     pk = PrimaryKeyField()
     name = TextField(null=False)
-    contact_information = TextField(null=False)
+    contact_information = TextField(null=True)
     location = TextField(null=True)
     notes = TextField(null=True)
     interaction_reminder_time = DateTimeField(formats='%Y-%m-%d %H:%M', null=True, default=None)

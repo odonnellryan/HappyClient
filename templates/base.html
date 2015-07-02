@@ -13,24 +13,22 @@
         </title>
     </head>
     <body>
-    <div class="pure-g-r">
-        <div class="pure-u-1-5 header-color-box red"></div>
-        <div class="pure-u-1-5 header-color-box blue"></div>
-        <div class="pure-u-1-5 header-color-box light-blue"></div>
-        <div class="pure-u-1-5 header-color-box dark-blue"></div>
-        <div class="pure-u-1-5 header-color-box orange"></div>
+    <div class="pure-g-r blue">
+            <div class="pure-u-1-4 logo">
+                <a href="{{ url_for('index') }}" class="logo"></a>
+            </div>
+            <div class="pure-u-3-4 action-bar right">
+                {% if logged_in %}
+                    <a href="{{ url_for('users.admin') }}">Admin</a>
+                    <a href="{{ url_for('company.index') }}">Home</a>
+                    <a class="gray-box-button" href="{{ url_for('users.logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('users.login') }}">Login</a>
+                    <a href="{{ url_for('users.register') }}" class="orange-box-button">Register</a>
+                {% endif %}
+            </div>
     </div>
-    <div class="pure-g-r ">
-        <div class="pure-u-1-4"></div>
-        <div class="pure-u-1-4"></div>
-        <div class="pure-u-1-4"></div>
-        <div class="pure-u-1-4 login-bar center">
-            {% if logged_in %}
-                <a class="logout" href="{{ url_for('blog.logout') }}">Logout</a>
-                <a class="logout" href="{{ url_for('blog.index') }}">Admin</a>
-                <a class="logout" href="{{ url_for('blog.preview') }}">Preview</a>
-            {% endif %}
-        </div>
+
     </div>
     <div class="pure-g-r">
         <div class="pure-u-1 header_message">
