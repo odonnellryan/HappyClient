@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
-class UserForm(Form):
+class RegistrationForm(Form):
     name = StringField('Name', validators=[DataRequired()])
     authentication_level = SelectField(
         "User Privilege Level",
@@ -19,5 +19,7 @@ class UserForm(Form):
     confirm = PasswordField('Repeat password')
     email = StringField('Email', validators = [DataRequired()])
     title = StringField('Title')
-    secret_question = StringField('Secret Question')
-    secret_answer = PasswordField('Secret Answer')
+    secret_question = StringField('Secret Question', validators = [DataRequired(message='Must supply secret question.')])
+    secret_answer = PasswordField('Secret Answer',
+                                  validators = [DataRequired(message='Must supply answer to secret question.')])
+    phone_number = StringField('Phone Number')

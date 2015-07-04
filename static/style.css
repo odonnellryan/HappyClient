@@ -210,8 +210,9 @@ input.image[type="checkbox"]:checked + label:before {
 div.logo{
     padding-left:.25em;
     padding-top:.5em;
-    margin-right:-.25em;
+    margin-right:-.5em;
     padding-right:-.25em;
+    margin-left:-.5em;
 }
 
 a.logo {
@@ -224,8 +225,8 @@ a.logo {
 }
 
 div.action-bar {
-    padding:.5em;
-    margin-left:-1em;
+    padding-bottom:.5em;
+    padding-top:.5em;
 }
 
 .orange-box-button {
