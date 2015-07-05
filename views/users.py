@@ -14,13 +14,12 @@ def register():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate():
         user = User()
-        user.create_user(name=form.name, plaintext_password=form.password, email=form.email, title=form.title,
+        user.create(name=form.name, plaintext_password=form.password, email=form.email, title=form.title,
                          secret_question=form.secret_question, plaintext_secret_answer=form.secret_answer,
                          phone_number=form.phone_number,company=session['company'],
                          authentication_level=form.authentication_level)
-
-        flash('Thanks for registering')
-        return redirect(url_for('login'))
+        flash('Thanks for registering!')
+        return redirect(url_for('index'))
     return render_template('user/register.html')
 
 

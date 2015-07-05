@@ -9,32 +9,26 @@ class User:
         This is used by both the user and by admins (user will of course need to authenticate)
     """
 
-    def __init__(self, plaintext_password=None, user_pk=None, email=None, admin=None):
-        if user_pk and (plaintext_password or admin):
-            try:
-                self.data = db.User.select().where(db.User.pk == user_pk).get()
-            except db.User.DoesNotExist as e:
-                raise exceptions.UserInvalid(e)
-        elif email and (plaintext_password or admin):
-            email = email.strip().lower()
-            try:
-                self.data = db.User.select().where(db.User.email == email).get()
-            except peewee.DoesNotExist as e:
-                raise exceptions.UserInvalid(e)
-        else:
-            self.data = None
-
-        if self.data:
-            if not self.validate_login(plaintext_password=plaintext_password, admin=admin):
+    def __init__(self):
                 self.data = None
 
-    def create_user(self, name, plaintext_password, email, title, secret_question, plaintext_secret_answer,
+    def get(self, pk=None, email=None):
+        if pk:
+            try:
+                self.data = db.User.select().where(db.User.pk == pk).get()
+            except db.User.DoesNotExist:
+                return None
+        if email:
+            try:
+                self.data = db.User.select().where(db.User.email == email).get()
+            except db.User.DoesNotExist:
+                return None
+
+    def create(self, name, plaintext_password, email, title, secret_question, plaintext_secret_answer,
                     phone_number, company, authentication_level=None):
         email = email.strip().lower()
         try:
             _user = db.User.select().where(db.User.email == email).get()
-            if _user:
-                raise exceptions.UserExists
         except db.User.DoesNotExist:
             # properly hash our things
             password = hashpw(plaintext_password.encode('utf-8'), gensalt())
@@ -50,8 +44,11 @@ class User:
             self.data = db.User.create(authentication_level=authentication_level, name=name,
                                         password=password, email=email, title=title, secret_question=secret_question,
                                         secret_answer=secret_answer, phone_number=phone_number, company=company.data)
+        else:
+            # if no exception is thrown raise this error (trying to create a user with an email that exists)
+            raise exceptions.UserExists
 
-    def delete_user(self):
+    def delete(self):
         if self.data:
             return self.data.delete_instance()
         else:

@@ -29,7 +29,7 @@ class TestCompanies(TestCase):
     def test_company_authentication(self):
         self.create_test_data()
         _user = user.User()
-        _user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+        _user.create('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1, company=self._company)
         self.assertTrue(self._company.check_user_authentication(_user))
         _other_company = company.Company()
@@ -40,13 +40,13 @@ class TestCompanies(TestCase):
     def test_get_company(self):
         self.create_test_data()
         _user = user.User()
-        _user.create_user('test_nam4545e3', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+        _user.create('test_nam4545e3', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1, company=self._company)
         _other_company = company.Company()
         _other_company.create_company('test_name2', '12234567893', '123 test road4, testville test')
         self.assertFalse((_other_company.data == _user.data.company))
         _other_user = user.User()
-        _other_user.create_user('testame34', 'test_password', 'ryan3@test.com', 'the_boss', 'what is the answer?', '42',
+        _other_user.create('testame34', 'test_password', 'ryan3@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1, company=_other_company)
         self.assertEqual(_other_company.data.pk, _other_user.data.company.pk)
         _test_company = company.Company(user=_other_user)
@@ -55,7 +55,7 @@ class TestCompanies(TestCase):
     def test_change_information(self):
         self.create_test_data()
         _user = user.User()
-        _user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+        _user.create('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1, company=self._company)
         self._company.change_information(_user, name="testing_name", phone_number="9999999999", address="test_location")
         _test_company = company.Company(user=_user)

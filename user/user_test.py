@@ -23,10 +23,10 @@ class TestUsers(TestCase):
         self._user = user.User()
         self._company = company.Company()
         self._company.create_company('test_name', '1223456789', '123 test road, testville test')
-        self._user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+        self._user.create('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=3, company=self._company)
         self._admin = user.User()
-        self._admin.create_user('admin', 'test_password', 'admin@test.com', 'the_boss', 'what is the answer?', '42',
+        self._admin.create('admin', 'test_password', 'admin@test.com', 'the_boss', 'what is the answer?', '42',
                                '1234567891', authentication_level=1, company=self._company)
 
     def test_user_creation(self):
@@ -40,7 +40,7 @@ class TestUsers(TestCase):
 
     def test_user_delete(self):
         self.create_test_data()
-        deleted = self._user.delete_user()
+        deleted = self._user.delete()
         self.assertEqual(deleted, 1)
 
     def test_user_validation(self):

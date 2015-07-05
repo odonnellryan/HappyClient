@@ -18,9 +18,9 @@ app.register_blueprint(users.users)
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(request):
     # this exists for flask-login
-    return user.User(user_id)
+    return user.User(request.form['email'], request.form['password'])
 
 #@app.before_request
 #def _db_connect():

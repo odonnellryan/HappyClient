@@ -22,7 +22,7 @@ class TestClients(unittest.TestCase):
         self._company = company.Company()
         self._company.create_company('test_name2', '12234567893', '123 test road4, testville test')
         self._user = user.User()
-        self._user.create_user('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
+        self._user.create('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
                           '1234567891', authentication_level=1, company=self._company)
         self._client = client.Client()
         self._client.create_client(self._user, "test_client", "contact info")
