@@ -9,7 +9,7 @@ class User:
         This is used by both the user and by admins (user will of course need to authenticate)
     """
 
-    def __init__(self):
+    def __init__(self, pk=None):
                 self.data = None
 
     def get(self, pk=None, email=None):

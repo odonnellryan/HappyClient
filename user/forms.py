@@ -1,4 +1,4 @@
-from flask_wtf import Form
+from wtforms import Form
 from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import DataRequired, Length, EqualTo
 
@@ -14,8 +14,8 @@ class RegistrationForm(Form):
         validators=[
             Length(min=8),
             DataRequired(),
-            EqualTo('confirm', message='Passwords must match')
-        ])
+            EqualTo('confirm', message='Passwords must match')]
+        )
     confirm = PasswordField('Repeat password')
     email = StringField('Email', validators = [DataRequired()])
     title = StringField('Title')
@@ -23,3 +23,11 @@ class RegistrationForm(Form):
     secret_answer = PasswordField('Secret Answer',
                                   validators = [DataRequired(message='Must supply answer to secret question.')])
     phone_number = StringField('Phone Number')
+
+
+class LoginForm(Form):
+    email = StringField('Email', validators=[DataRequired()])
+    password = PasswordField(
+        'Password',
+        validators=[DataRequired()]
+    )
