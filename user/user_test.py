@@ -59,7 +59,7 @@ class TestUsers(TestCase):
                                       phone_number='1231231234', name='new_name', title='new_title')
         pk = self._user.data.pk
         self._user_2 = user.User()
-        self._user_2.get(pk=pk)
+        self._user_2.set(pk=pk)
         self.assertEqual(self._user_2.data.authentication_level, 2)
         self.assertEqual(self._user_2.data.phone_number, '1231231234')
         self.assertEqual(self._user_2.data.name, 'new_name')
@@ -83,10 +83,10 @@ class TestUsers(TestCase):
     def test_get_user_by_pk(self):
         self.create_test_data()
         pk_1 = self._user.data.pk
-        _user = user.User().get(pk=pk_1)
+        _user = user.User().set(pk=pk_1)
         self.assertIsNone(_user)
         _user3 = user.User()
-        _user3.get(pk=pk_1)
+        _user3.set(pk=pk_1)
         pk_2 = _user3.data.pk
         self.assertEqual(pk_1, pk_2)
         #self.assertRaises(exceptions.UserInvalid, user.User, user_pk=1000, plaintext_password='test_password')
@@ -95,10 +95,10 @@ class TestUsers(TestCase):
         self.create_test_data()
         email = 'ryan@test.com'
         # need password to get user, this should be none
-        _user_1 = user.User().get(email=email)
+        _user_1 = user.User().set(email=email)
         self.assertIsNone(_user_1)
         _user_12 = user.User()
-        _user_12.get(email=email)
+        _user_12.set(email=email)
         self.assertEqual(_user_12.data.pk, self._user.data.pk)
         # should raise an exception.
         #self.assertRaises(exceptions.UserInvalid, user.User, email='doesnotexist@test.com',

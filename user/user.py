@@ -12,23 +12,23 @@ class User:
     def __init__(self, pk=None):
                 self.data = None
 
-    def get(self, pk=None, email=None):
+    def set(self, pk=None, email=None):
         if pk:
             try:
-                self.data = db.User.select().where(db.User.pk == pk).get()
+                self.data = db.User.select().where(db.User.pk == pk).set()
             except db.User.DoesNotExist:
-                return None
+                raise exceptions.UserInvalid
         if email:
             try:
-                self.data = db.User.select().where(db.User.email == email).get()
+                self.data = db.User.select().where(db.User.email == email).set()
             except db.User.DoesNotExist:
-                return None
+                raise exceptions.UserInvalid
 
     def create(self, name, plaintext_password, email, title, secret_question, plaintext_secret_answer,
                     phone_number, company, authentication_level=None):
         email = email.strip().lower()
         try:
-            _user = db.User.select().where(db.User.email == email).get()
+            _user = db.User.select().where(db.User.email == email).set()
         except db.User.DoesNotExist:
             # properly hash our things
             password = hashpw(plaintext_password.encode('utf-8'), gensalt())

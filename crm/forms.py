@@ -8,3 +8,9 @@ class ClientForm(helper_functions.RedirectForm):
     contact_information = TextAreaField('Contact Information')
     location = StringField('Location')
     notes = TextAreaField('Notes')
+
+class CompanyForm(helper_functions.RedirectForm):
+    name = StringField('Name', validators=[DataRequired()])
+    contact_information = TextAreaField('Contact Information')
+    location = StringField('Location')
+    notes = TextAreaField('Notes')

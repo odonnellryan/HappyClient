@@ -10,7 +10,7 @@ class Client:
                 self.data = (db.Client.select()
                              .where(db.Client.pk == client_pk)
                              .where(db.Client.company.pk == user.data.company.pk)
-                             .get())
+                             .set())
             except db.Client.DoesNotExist:
                 raise exceptions.ClientInvalid
         else:

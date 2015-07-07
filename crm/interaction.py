@@ -9,7 +9,7 @@ class Interaction:
                 self.data = (db.Interaction.select()
                              .where(db.Interaction.pk == interaction_pk)
                              .where(db.Interaction.company.pk == user.data.company.pk)
-                             .get())
+                             .set())
             except db.Interaction.DoesNotExist:
                 raise InteractionInvalid
         else:

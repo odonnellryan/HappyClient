@@ -3,8 +3,8 @@ from flask.ext.login import LoginManager
 import user.user as user
 from peewee import *
 from flask_wtf.csrf import CsrfProtect
-from views import users
-
+from views import users, company
+import exceptions
 
 app = Flask(__name__)
 
@@ -21,11 +21,14 @@ login_manager.init_app(app)
 CsrfProtect(app)
 app.secret_key = 'super secret key'
 app.register_blueprint(users.users)
+app.register_blueprint(company.company)
 
 @login_manager.user_loader
-def load_user(request):
+def load_user(user_pk):
     _user = user.User()
-    if not _user.get(request.form['pk']):
+    try:
+        _user.set(pk=user_pk)
+    except exceptions.UserInvalid:
         return None
     else:
         return _user

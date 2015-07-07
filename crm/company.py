@@ -4,7 +4,7 @@ class Company:
     def __init__(self, user=None):
         if user:
             try:
-                self.data = db.Company.select().where(db.Company.pk == user.data.company.pk).get()
+                self.data = db.Company.select().where(db.Company.pk == user.data.company.pk).set()
             except db.Company.DoesNotExist:
                 raise exceptions.CompanyInvalid
         else:
