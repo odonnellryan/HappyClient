@@ -117,7 +117,7 @@ h2 a:hover:after {
 }
 
 a {
-    color: #FF8400;
+    color: #ff9301;
 }
 
 a:hover {
@@ -201,7 +201,7 @@ div.action-bar {
     padding-right: .5em;
     margin-left:.5em;
     display: inline-block;
-    background-color:  #FF8400;
+    background-color:  #ff9301;
     border-radius: .5em;
 }
 

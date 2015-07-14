@@ -12,7 +12,7 @@ def home():
 @users.route('/register/', methods=['GET', 'POST'])
 def register():
     if not 'company' in session:
-        return redirect(url_for('company.home'))
+        return redirect(url_for('company.new'))
     form = NewUserForm(request.form)
     print(form.validate())
     print(form.errors)
@@ -23,7 +23,7 @@ def register():
                          secret_question=form.secret_question.data, plaintext_secret_answer=form.secret_answer.data,
                          phone_number=form.phone_number.data,company=session['company'],
                          authentication_level=1)
-        #flash('Thanks for registering!')
+        flash('Thanks for registering!')
     return render_template('user/register.html', form=form)
 
 

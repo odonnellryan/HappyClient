@@ -1,5 +1,5 @@
-{% from "_form_helper.html" import render_field %}
 {% extends "base.html" %}
+{% from "../_form_helper.html" import render_field %}
 {% block body %}
     <div class="pure-g-r form-box center">
         <div class="pure-u-1">
@@ -13,33 +13,15 @@
             {% if form.csrf_token.errors %}
                 <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
             {% endif %}
-            <div class="pure-u-1">
                 {{ render_field(form.email, placeholder="email") }}
-            </div>
-            <div class="pure-u-1">
                 {{ render_field(form.password, placeholder="password") }}
-            </div>
-            <div class="pure-u-1">
                 {{ render_field(form.confirm, placeholder="confirm password") }}
-            </div>
-            <div class="pure-u-1">
                 {{ render_field(form.name, placeholder="name") }}
-            </div>
-            <div class="pure-u-1">
                 {{ render_field(form.title, placeholder="title") }}
-            </div>
-            <div class="pure-u-1">
                 {{ render_field(form.phone_number, placeholder="phone number") }}
-            </div>
-            <div class="pure-u-1">
                 {{ render_field(form.secret_question, placeholder="secret question") }}
-            </div>
-            <div class="pure-u-1">
                 {{ render_field(form.secret_answer, placeholder="secret answer") }}
-            </div>
-            <div class="pure-u-1">
                 <button type="submit" class="button b-orange">Register</button>
-            </div>
         </form>
     </div>
 {% endblock %}

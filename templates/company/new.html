@@ -1,4 +1,15 @@
 {% extends "base.html" %}
+{% from "../_form_helper.html" import render_field %}
 {% block body %}
-Placeholder for company page.
+    <form method="POST" action="{{ url_for('users.register') }}" class="pure-form pure-form-aligned center"
+          xmlns="http://www.w3.org/1999/html">
+            {{ form.hidden_tag() }}
+            {% if form.csrf_token.errors %}
+                <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
+            {% endif %}
+                {{ render_field(form.name, placeholder="company name") }}
+                {{ render_field(form.phone_number, placeholder="phone number") }}
+                {{ render_field(form.address, placeholder="address") }}
+                <button type="submit" class="button b-orange">Create Company</button>
+        </form>
 {% endblock %}
