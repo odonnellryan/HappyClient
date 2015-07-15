@@ -21,6 +21,11 @@ def new():
         company = Company()
         company.create_company(form.name.data, form.phone_number.data,
                                form.address.data)
-        session['company'] = company
+        #
+        # store company PK, we'll have to get the company each time we
+        # would like to view it
+        # can probably store this in flask login as well, possibly
+        #
+        session['company'] = company.data.pk
         return redirect(url_for('company.home'))
     return render_template('company/new.html', form=form)

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% from "../_form_helper.html" import render_field %}
+{% from "./_form_helper.html" import render_field %}
 {% block body %}
-    <form method="POST" action="{{ url_for('users.register') }}" class="pure-form pure-form-aligned center"
+    <form method="POST" action="{{ url_for('company.new') }}" class="pure-form pure-form-aligned center"
           xmlns="http://www.w3.org/1999/html">
             {{ form.hidden_tag() }}
             {% if form.csrf_token.errors %}

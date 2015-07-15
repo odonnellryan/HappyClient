@@ -1,14 +1,17 @@
 from peewee import IntegerField, Model, TextField, PrimaryKeyField, \
-    PostgresqlDatabase, ForeignKeyField, DecimalField, DateTimeField
-import config
+    ForeignKeyField, DecimalField, DateTimeField, SqliteDatabase, PostgresqlDatabase
 import datetime
-database = PostgresqlDatabase(config.database['database'], user=config.database['username'],
-                              passwd=config.database['password'])
+import config
 
+if config.debug:
+    database = SqliteDatabase(':memory:')
+else:
+    # eventually put postgres here for prod
+    pass
 
 class HappyClient(Model):
-    class Meta:
-        database = database
+    database = database
+    #database = PostgresqlDatabase('my_app.db')
 
 
 class Company(HappyClient):
