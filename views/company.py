@@ -7,7 +7,8 @@ company = Blueprint('company', __name__, url_prefix='/company')
 def home():
     if not 'company' in session:
         return redirect(url_for('company.new'))
-    # also check if user logged in
+    company = Company()
+    company.
     return render_template('company/home.html')
 
 @company.route('/new/', methods=['GET', 'POST'])

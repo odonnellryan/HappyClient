@@ -16,10 +16,7 @@ def register():
     if 'company' not in session:
         return redirect(url_for('company.new'))
     form = NewUserForm(request.form)
-    print(form.validate())
-    print(form.errors)
     if request.method == 'POST' and form.validate():
-        print('worked?')
         user = User()
         user.create(name=form.name, plaintext_password=form.password.data, email=form.email.data, title=form.title.data,
                     secret_question=form.secret_question.data, plaintext_secret_answer=form.secret_answer.data,

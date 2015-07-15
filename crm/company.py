@@ -1,10 +1,10 @@
 import db, exceptions
 
 class Company:
-    def __init__(self, user=None):
-        if user:
+    def __init__(self, pk=None):
+        if pk:
             try:
-                self.data = db.Company.select().where(db.Company.pk == user.data.company.pk).set()
+                self.data = db.Company.select().where(db.Company.pk == pk).get()
             except db.Company.DoesNotExist:
                 raise exceptions.CompanyInvalid
         else:
