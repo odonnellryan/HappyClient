@@ -104,8 +104,7 @@ h6 {
 }
 
 h1 a {
-    color: #000;
-    display: block;
+    font-size: .75em;
 }
 
 h2 a:hover {
@@ -115,6 +114,8 @@ h2 a:hover {
 h2 a:hover:after {
     color: #000;
 }
+
+/* mentioning anchor here for searching purposes */
 
 a {
     color: #ff9301;
@@ -249,6 +250,15 @@ span.tags a:hover {
     cursor: hand;
     border: none;
     margin: 1em auto;
+}
+
+.b-search {
+    padding: .25em;
+    display: inline;
+    font-size: .8em;
+    line-height: 1.8em;
+    border:none;
+    border-radius: 6px;
 }
 
 .button-small {

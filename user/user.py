@@ -15,12 +15,12 @@ class User:
     def set(self, pk=None, email=None):
         if pk:
             try:
-                self.data = db.User.select().where(db.User.pk == pk).set()
+                self.data = db.User.select().where(db.User.pk == pk).get()
             except db.User.DoesNotExist:
                 raise exceptions.UserInvalid
         if email:
             try:
-                self.data = db.User.select().where(db.User.email == email).set()
+                self.data = db.User.select().where(db.User.email == email).get()
             except db.User.DoesNotExist:
                 raise exceptions.UserInvalid
 
@@ -28,7 +28,7 @@ class User:
                     phone_number, company, authentication_level=None):
         email = email.strip().lower()
         try:
-            _user = db.User.select().where(db.User.email == email).set()
+            _user = db.User.select().where(db.User.email == email).get()
         except db.User.DoesNotExist:
             # properly hash our things
             password = hashpw(plaintext_password.encode('utf-8'), gensalt())

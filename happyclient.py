@@ -9,16 +9,17 @@ import config
 import db
 
 def create_tables():
-    db.database.connect()
-    # try to create the tables (first run) if exception is thrown,
-    # pass. Can probably use some other way to check this but for now
-    # it is fine
-    try:
-        db.database.create_tables([db.User, db.Client, db.Company,
-                            db.Interaction])
-    except OperationalError as e:
-        print(e)
-        pass
+    pass
+    #db.database.connect()
+    # # try to create the tables (first run) if exception is thrown,
+    # # pass. Can probably use some other way to check this but for now
+    # # it is fine
+    #try:
+    #    db.database.create_tables([
+    #                        db.Interaction])
+    #except OperationalError as e:
+    #    print(e)
+    #  #  pass
 
 app = Flask(__name__)
 
