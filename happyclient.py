@@ -1,7 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 from flask.ext.login import LoginManager
 import user.user as user
-from peewee import *
 from flask_wtf.csrf import CsrfProtect
 from views import users, company
 import exceptions
@@ -27,8 +26,10 @@ app.debug = config.debug
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = url_for('users.login')
 
 CsrfProtect(app)
+
 app.secret_key = 'super secret key'
 app.register_blueprint(users.users)
 app.register_blueprint(company.company)

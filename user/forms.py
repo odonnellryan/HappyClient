@@ -4,7 +4,7 @@ from flask_wtf import Form
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
-class NewUserForm(Form):
+class NewUserForm(helper_functions.RedirectForm):
     name = StringField('Name', validators=[DataRequired()])
     #authentication_level = SelectField(
     #    "User Privilege Level",

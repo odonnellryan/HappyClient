@@ -23,7 +23,6 @@ small {
 pre {
     white-space: pre-wrap; /* css-3 */
     white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
     white-space: -o-pre-wrap; /* Opera 7 */
     word-wrap: break-word; /* Internet Explorer 5.5+ */
     white-space: pre-wrap;
@@ -55,7 +54,6 @@ ul, ol {
 
 a {
     text-decoration: none;
-
 }
 
 blockquote {
@@ -294,7 +292,7 @@ span.tags a:hover {
 .b-gray:hover {
     border: none;
     background-color: #79CEED;
-    box-shadow: 0px 0px 1px #777;
+    box-shadow: 0 0 1px #777;
 }
 
 .b-orange {
@@ -304,7 +302,7 @@ span.tags a:hover {
 .b-orange:hover {
     border: none;
     background-color: #f42a00;
-    box-shadow: 0px 0px 1px #777;
+    box-shadow: 0 0 1px #777;
 }
 
 .submit {
@@ -326,7 +324,7 @@ span.tags a:hover {
 .submit:hover {
     border: none;
     background: #f42a00;
-    box-shadow: 0px 0px 1px #777;
+    box-shadow: 0 0 1px #777;
 }
 
 /* additional div styling */

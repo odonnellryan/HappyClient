@@ -13,4 +13,7 @@ TODO:
     Interactions:
         Setup email/etc interactions
         Create cool UI for interactions
+    Search:
+        General search library to do a "contains" search on various models.
+        
         
