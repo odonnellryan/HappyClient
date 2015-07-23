@@ -4,9 +4,9 @@ import datetime
 import config
 
 if config.debug:
-    database = SqliteDatabase(':memory:')
+    database = SqliteDatabase('C:\\test.db')
 else:
-    # eventually put postgres here for prod
+    # eventually put postgres here for production
     pass
 
 class HappyClient(Model):
