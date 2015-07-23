@@ -12,7 +12,6 @@ body {
     font-family: 'Lato', sans-serif;
     font-size: 20px;
     text-decoration: none;
-    -webkit-text-stroke: .25px;
 }
 
 /* below are text-styles  */
@@ -31,7 +30,6 @@ pre {
     padding-left: 1.5em;
     padding-bottom: .5em;
     padding-top: .5em;
-    -webkit-text-stroke: 0px;
     font-family: 'Source Code Pro', sans-serif;
 }
 
@@ -42,7 +40,6 @@ p {
     font-family: 'Lato', sans-serif;
     padding-bottom: .5em;
     padding-top: .5em;
-    -webkit-text-stroke: 0px;
 }
 
 em {
@@ -54,7 +51,6 @@ ul, ol {
     padding-left: 2em;
     padding-bottom: 1em;
     padding-top: .5em;
-    -webkit-text-stroke: 0px;
 }
 
 a {
