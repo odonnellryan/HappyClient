@@ -35,7 +35,15 @@
     </div>
     <div class="pure-g-r">
         <div class="pure-u-1 header_message">
-            {{ header_message }}
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
         </div>
     </div>
     <div class="pure-g-r main">

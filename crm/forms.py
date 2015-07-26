@@ -13,5 +13,5 @@ class NewClientForm(helper_functions.RedirectForm):
 
 class CompanyForm(helper_functions.RedirectForm):
     name = StringField('Name', validators=[DataRequired()])
-    phone_number = TextAreaField('Phone Number')
-    address = StringField('Address')
+    phone_number = StringField('Phone Number')
+    address = TextAreaField('Address')
