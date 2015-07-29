@@ -42,12 +42,12 @@ def login():
             print(e)
             flash('Invalid username and/or password.')
             return redirect(url_for('users.login'))
-        if user.validate_login(plaintext_password=form.password.data):
+        if user.is_authenticated(plaintext_password=form.password.data):
             login_user(user)
             return form.redirect()
         else:
-            flash("User credentials invalid.")
-    return render_template('user/login.html')
+            flash('Invalid username and/or password.')
+    return render_template('user/login.html', form=form)
 
 
 @users.route('/profile/')

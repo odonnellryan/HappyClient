@@ -25,12 +25,10 @@ class Company:
     def check_user_authentication(self, user):
         return user.data.company.pk == self.data.pk
 
-    def change_information(self, user, **kwargs):
+    def change_information(self, **kwargs):
         # this method of setting the attributes may not always work as intended.
         # specifically, it does not check if the attribute exists or not.
         # but this is simple enough to be OK
-        if self.check_user_authentication(user):
-            for k, v in kwargs.items():
-                setattr(self.data, k, v)
-            return self.data.save()
-        raise exceptions.CompanyAccessError("You are not permitted to modify company information.")
+        for k, v in kwargs.items():
+            setattr(self.data, k, v)
+        return self.data.save()

@@ -1,4 +1,21 @@
 {% extends "base.html" %}
+{% from "./_form_helper.html" import render_field %}
 {% block body %}
-    Placeholder user login page.
+    <div class="pure-g-r form-box center">
+        <div class="pure-u-1">
+            <h1>
+                User Login
+            </h1>
+        </div>
+        <form method="POST" action="{{ url_for('users.login') }}" class="pure-form pure-form-aligned center"
+          xmlns="http://www.w3.org/1999/html">
+            {{ form.hidden_tag() }}
+            {% if form.csrf_token.errors %}
+                <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
+            {% endif %}
+                {{ render_field(form.email, placeholder="email") }}
+                {{ render_field(form.password, placeholder="password") }}
+                <button type="submit" class="button b-orange">Login</button>
+        </form>
+    </div>
 {% endblock %}

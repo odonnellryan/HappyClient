@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash, session, redirect, url_for
+from flask_login import current_user, login_user
 from crm.forms import CompanyForm
 from crm.company import Company
 import exceptions
@@ -6,6 +7,8 @@ company = Blueprint('company', __name__, url_prefix='/company')
 
 @company.route('/')
 def home():
+    if current_user.is_authenticated:
+        session['company'] = current_user.data.company.pk
     if not 'company' in session:
         return redirect(url_for('company.new'))
     try:
@@ -48,9 +51,10 @@ def edit():
     else:
         return redirect(url_for('company.new'))
     if request.method == 'POST' and form.validate():
-        company = Company()
-        company.create_company(form.name.data, form.phone_number.data,
-                               form.address.data)
+        information = {'name': form.name.data,
+                    'phone_number': form.phone_number.data,
+                    'address': form.address.data}
+        company.change_information(**information)
         #
         # store company PK, we'll have to get the company each time we
         # would like to view it

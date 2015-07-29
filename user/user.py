@@ -24,6 +24,10 @@ class User:
             except db.User.DoesNotExist:
                 raise exceptions.UserInvalid
 
+    def get_id(self):
+        if self.data: return self.data.pk
+        return None
+
     def create(self, name, plaintext_password, email, title, secret_question, plaintext_secret_answer,
                     phone_number, company, authentication_level=None):
         email = email.strip().lower()
@@ -61,7 +65,7 @@ class User:
                 return True
         return False
 
-    def validate_login(self, plaintext_password=None, admin=None):
+    def is_authenticated(self, plaintext_password=None, admin=None):
         if admin:
             if admin.data.authentication_level == 1 and admin.data.company.pk == self.data.company.pk:
                 return True
@@ -76,10 +80,18 @@ class User:
                 return True
         return False
 
+    def is_active(self):
+        # for now we won't have inactive users.
+        # TODO: add inactive users!
+        return True
+
+    def is_anonymous(self):
+        return False
+
     def change_information(self, plaintext_password=None, admin=None, authentication_level=None, name=None, email=None, title=None,
                            secret_question=None, plaintext_secret_answer=None, phone_number=None,
                            new_plaintext_password=None):
-        if self.validate_login(plaintext_password=plaintext_password, admin=admin):
+        if self.is_authenticated(plaintext_password=plaintext_password, admin=admin):
             if authentication_level:
                 self.data.authentication_level = authentication_level
             if new_plaintext_password:
