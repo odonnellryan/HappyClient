@@ -72,14 +72,13 @@ h3,
 h4,
 h5,
 h6 {
-    margin-top: .5em;
-    margin-bottom: .5em;
+    padding-top: .5em;
+    padding-bottom: .5em;
     font-weight: bold;
 }
 
 h1 {
     font-size: 1.5em;
-    color: #000;
 }
 
 h2 {
@@ -113,6 +112,7 @@ h2 a:hover:after {
 /* mentioning anchor here for searching purposes */
 
 a {
+    font-weight: 500;
     color: #ff9301;
 }
 
@@ -147,12 +147,12 @@ textarea {
     border-color: #d0d0d0;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#576bb2+0,62ace5+100
     background: #576bb2; /* Old browsers */
-    background: -moz-linear-gradient(top,  #576bb2 0%, #62ace5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#576bb2), color-stop(100%,#62ace5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #576bb2 0%,#62ace5 100%); /* Chrome10+,Safari5.1+ */
+    background: -moz-linear-gradient(top,  #576bb2 0%, #69aab2 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #576bb2), color-stop(100%, #69aab2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #576bb2 0%, #69aab2 100%); /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(top,  #576bb2 0%,#62ace5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #576bb2 0%,#62ace5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #007090 0%,#62ace5 100%); /* W3C */
+    background: -ms-linear-gradient(top, #576bb2 0%,#62ace5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #007090 0%, #45a0a5 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#576bb2', endColorstr='#62ace5',GradientType=0 ); /* IE6-9 */
     color:#fff;
 }
@@ -207,10 +207,10 @@ div.action-bar {
 
 .orange-box-button {
     color: #fff;
-    padding-top:.2em;
-    padding-bottom: .3em;
-    padding-left: .5em;
-    padding-right: .5em;
+    padding-top:.3em;
+    padding-bottom: .4em;
+    padding-left: .7em;
+    padding-right: .7em;
     margin-left:.5em;
     display: inline-block;
     background-color:  #ff9301;
@@ -408,3 +408,23 @@ span.tags a:hover {
     padding: 3em;
 }
 
+.splash {
+    text-align: center;
+    vertical-align: middle;
+    color:#fff;
+    width:100%;
+    height:80%;
+    font-size: 3vw;
+    background-image: url('/static/img/splash.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+      text-shadow:
+   -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+.splash a {
+    text-shadow: none;
+}

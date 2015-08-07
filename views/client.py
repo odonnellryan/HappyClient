@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, flash, session, redirect, url_for
-from flask_login import current_user
+from flask_login import current_user, login_user
 from crm.forms import CompanyForm
 from crm.company import Company
 import exceptions
-company = Blueprint('company', __name__, url_prefix='/company')
+client = Blueprint('client', __name__, url_prefix='/company')
 
-@company.route('/')
+@client.route('/')
 def home():
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
         session['company'] = current_user.data.company.pk
     if not 'company' in session:
         return redirect(url_for('company.new'))
@@ -19,7 +19,7 @@ def home():
         return url_for('company.new')
     return render_template('company/home.html', company=company.data)
 
-@company.route('/new/', methods=['GET', 'POST'])
+@client.route('/new/', methods=['GET', 'POST'])
 def new():
     # also check if user logged in
     # since all users _must_ have an associated company
@@ -39,7 +39,7 @@ def new():
         return redirect(url_for('company.home'))
     return render_template('company/new.html', form=form)
 
-@company.route('/edit/', methods=['GET', 'POST'])
+@client.route('/edit/', methods=['GET', 'POST'])
 def edit():
     """
     edits the company information

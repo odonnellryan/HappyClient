@@ -1,24 +1,22 @@
 {% extends "base.html" %}
 {% from "./_form_helper.html" import render_field %}
 {% block body %}
-<div class="content main">
     <div class="pure-g-r form-box center">
     <h1>
         <div class="pure-u-1">
-                Create New Company
+                Edit {{ form.name.data }}'s Information
         </div>
     </h1>
-    <form method="POST" action="{{ url_for('company.new') }}" class="pure-form pure-form-aligned center"
+    <form method="POST" action="{{ url_for('company.edit') }}" class="pure-form pure-form-aligned center"
           xmlns="http://www.w3.org/1999/html">
             {{ form.hidden_tag() }}
             {% if form.csrf_token.errors %}
                 <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
             {% endif %}
-                {{ render_field(form.name, placeholder="company name") }}
-                {{ render_field(form.phone_number, placeholder="phone number") }}
-                {{ render_field(form.address, placeholder="address") }}
-                <button type="submit" class="button b-orange">Create Company</button>
+                {{ render_field(form.name, placeholder=form.name.data) }}
+                {{ render_field(form.phone_number, placeholder=form.phone_number.data) }}
+                {{ render_field(form.address, placeholder=form.address.data) }}
+                <button type="submit" class="button b-orange">Modify Company</button>
         </form>
     </div>
-</div>
 {% endblock %}
