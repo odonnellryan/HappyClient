@@ -1,10 +1,55 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="splash center">
-    <br>
     <h1>Happy Client</h1>
-    <h3>The simple client relationship software.</h3>
-    <br>
-    <a href="{{ url_for('company.new') }}" class="orange-box-button">Create your first company now!</a>
-</div>
+    <h3>The simple client relationship software</h3>
+    <a href="{{ url_for('company.new') }}" class="orange-box-button">Add your company now!</a>
+    </div>
+        <div class="pure-g-r main content center">
+        <div class="pure-u-1 center">
+            <h1>How it works:</h1>
+        </div>
+            <div class="pure-u-1-3">
+                <span class="icon">
+                    &#128211;
+                </span>
+                <p>
+                    Add your clients and any special notes you may have about them. Get greative!
+                </p>
+            </div>
+            <div class="pure-u-1-3">
+                <span class="icon">
+                    &#127776;
+                </span>
+                <p>
+                    Give each interaction a quick rating from one to five based on how well it went.
+                </p>
+            </div>
+            <div class="pure-u-1-3">
+                <span class="icon">
+                    &#128197;
+                </span>
+                <p>
+                    Set interaction reminders. Ensure you're keeping in touch!
+                </p>
+            </div>
+            <br>
+            <br>
+            <div class="pure-u-1">
+        </div>
+        </div>
+        <div class="full-width blue white-text footer">
+            <div class="pure-g-r main content center">
+                <div class="pure-u-1">
+                    <p>
+                        That's it! Happy Client gives you simple yet powerful control over your clients, your interactions,
+                        and your reminders.
+                        <br><br>
+                        It allows you to track only the important information&mdash;the information that will
+                        get you a sale&mdash;and not worry about the rest.
+                    </p>
+                    <br>
+                </div>
+        </div>
+    </div>
 {% endblock %}

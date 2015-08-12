@@ -1,27 +1,29 @@
 {% extends "base.html" %}
 {% from "./_form_helper.html" import render_field %}
 {% block body %}
-    <div class="pure-g-r form-box center">
-        <div class="pure-u-1">
-            <h1>
-                User Registration
-            </h1>
+    <div class="content main">
+        <div class="pure-g-r form-box center">
+            <div class="pure-u-1">
+                <h1>
+                    User Registration
+                </h1>
+            </div>
+            <form method="POST" action="{{ url_for('users.register') }}" class="pure-form pure-form-aligned center"
+              xmlns="http://www.w3.org/1999/html">
+                {{ form.hidden_tag() }}
+                {% if form.csrf_token.errors %}
+                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
+                {% endif %}
+                    {{ render_field(form.email, placeholder="email") }}
+                    {{ render_field(form.password, placeholder="password") }}
+                    {{ render_field(form.confirm, placeholder="confirm password") }}
+                    {{ render_field(form.name, placeholder="name") }}
+                    {{ render_field(form.title, placeholder="title") }}
+                    {{ render_field(form.phone_number, placeholder="phone number") }}
+                    {{ render_field(form.secret_question, placeholder="secret question") }}
+                    {{ render_field(form.secret_answer, placeholder="secret answer") }}
+                    <button type="submit" class="button b-orange">Register</button>
+            </form>
         </div>
-        <form method="POST" action="{{ url_for('users.register') }}" class="pure-form pure-form-aligned center"
-          xmlns="http://www.w3.org/1999/html">
-            {{ form.hidden_tag() }}
-            {% if form.csrf_token.errors %}
-                <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
-            {% endif %}
-                {{ render_field(form.email, placeholder="email") }}
-                {{ render_field(form.password, placeholder="password") }}
-                {{ render_field(form.confirm, placeholder="confirm password") }}
-                {{ render_field(form.name, placeholder="name") }}
-                {{ render_field(form.title, placeholder="title") }}
-                {{ render_field(form.phone_number, placeholder="phone number") }}
-                {{ render_field(form.secret_question, placeholder="secret question") }}
-                {{ render_field(form.secret_answer, placeholder="secret answer") }}
-                <button type="submit" class="button b-orange">Register</button>
-        </form>
     </div>
 {% endblock %}

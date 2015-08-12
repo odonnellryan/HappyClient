@@ -37,8 +37,7 @@ code {
 
 p {
     font-family: 'Lato', sans-serif;
-    padding-bottom: .5em;
-    padding-top: .5em;
+    padding: .5em;
 }
 
 em {
@@ -66,14 +65,8 @@ blockquote p {
     margin: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    padding-top: .5em;
-    padding-bottom: .5em;
+h1, h2, h3, h4, h5, h6 {
+    padding:.5em;
     font-weight: bold;
 }
 
@@ -112,8 +105,8 @@ h2 a:hover:after {
 /* mentioning anchor here for searching purposes */
 
 a {
-    font-weight: 500;
-    color: #ff9301;
+    font-weight: 400;
+    color: #fc7700;
 }
 
 a:hover {
@@ -201,8 +194,13 @@ a.logo {
 }
 
 div.action-bar {
+    color: #fff;
     padding-bottom:.5em;
     padding-top:.5em;
+}
+
+.action-bar a {
+    color:#fff;
 }
 
 .orange-box-button {
@@ -212,8 +210,9 @@ div.action-bar {
     padding-left: .7em;
     padding-right: .7em;
     margin-left:.5em;
+    margin-right:.5em;
     display: inline-block;
-    background-color:  #ff9301;
+    background-color:  #fc7700;
     border-radius: .5em;
 }
 
@@ -313,7 +312,7 @@ span.tags a:hover {
 }
 
 .b-orange {
-    background-color: #FF8400;
+    background-color: #fc7700;
 }
 
 .b-orange:hover {
@@ -372,7 +371,7 @@ span.tags a:hover {
 }
 
 .orange {
-    background-color: #FF8400;
+    background-color: #fc7700;
 }
 
 .gray {
@@ -392,6 +391,7 @@ span.tags a:hover {
     padding-left: 2em;
     padding-top: 1em;
     padding-right: 2em;
+    padding-bottom: 1em;
 }
 
 .content {
@@ -404,20 +404,19 @@ span.tags a:hover {
 }
 
 .footer {
-    text-align: center;
-    padding: 3em;
+    box-shadow: 0px 1500px 0px 1500px #007090;
 }
 
 .splash {
+    padding-top:2em;
+    font-size: 1.4em;
     text-align: center;
-    vertical-align: middle;
     color:#fff;
     width:100%;
-    height:80%;
-    font-size: 3vw;
+    min-height:350px;
     background-image: url('/static/img/splash.jpg');
-    background-size: 100%;
-    background-repeat: no-repeat;
+    background-repeat:no-repeat;
+    background-position:center;
       text-shadow:
    -1px -1px 0 #000,
     1px -1px 0 #000,
@@ -426,5 +425,23 @@ span.tags a:hover {
 }
 
 .splash a {
+    margin-top: 1em;
     text-shadow: none;
+}
+
+.icon {
+    margin: .25em auto;
+    text-align: center;
+    line-height: 150px;
+    display:block;
+    width: 150px;
+	height: 150px;
+    background-color: #007090;
+    border-radius: 50%;
+    color:#fff;
+    font-size:5em;
+}
+
+.white-text {
+    color: #fff;
 }

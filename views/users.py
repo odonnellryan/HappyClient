@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, session, redirect,
 from user.forms import NewUserForm, LoginForm
 from user.user import User
 from crm.company import Company
-from flask_login import login_user, login_required, current_user
+from flask_login import login_user, login_required, current_user, logout_user
 users = Blueprint('users', __name__, url_prefix='/users')
 import exceptions
 
@@ -35,7 +35,7 @@ def login():
     form = LoginForm(request.form)
     print(current_user.is_authenticated)
     if current_user.is_authenticated():
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     if request.method == 'POST' and form.validate():
         user = User()
         try:
@@ -45,13 +45,19 @@ def login():
             print(e)
             flash('Invalid username and/or password.')
             return redirect(url_for('users.login'))
-        if user.is_authenticated(plaintext_password=form.password.data):
+        if user.validate_login(plaintext_password=form.password.data):
             login_user(user)
             flash('Successfully logged in!')
             return form.redirect()
         else:
             flash('Invalid username and/or password.')
     return render_template('user/login.html', form=form)
+
+
+@users.route('/logout/')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @users.route('/profile/')

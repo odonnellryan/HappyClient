@@ -45,7 +45,7 @@ class TestUsers(TestCase):
 
     def test_user_validation(self):
         self.create_test_data()
-        self.assertTrue(self._user.is_authenticated(plaintext_password='test_password'))
+        self.assertTrue(self._user.validate_login(plaintext_password='test_password'))
 
     def test_user_secret_question(self):
         self.create_test_data()
@@ -69,8 +69,8 @@ class TestUsers(TestCase):
         self.create_test_data()
         self._user.change_information('test_password', new_plaintext_password='new_password')
 
-        self.assertFalse(self._user.is_authenticated(plaintext_password='test_password'))
-        self.assertTrue(self._user.is_authenticated(plaintext_password='new_password'))
+        self.assertFalse(self._user.validate_login(plaintext_password='test_password'))
+        self.assertTrue(self._user.validate_login(plaintext_password='new_password'))
 
     def test_user_change_secret_question(self):
         self.create_test_data()

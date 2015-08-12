@@ -7,6 +7,11 @@ import exceptions
 import config
 import db
 
+from flask.ext.login import AnonymousUserMixin
+class Anonymous(AnonymousUserMixin):
+  def __init__(self):
+    self.is_validated = 'Guest'
+
 def create_tables():
     pass
     #db.database.connect()
