@@ -3,7 +3,7 @@ from flask_login import current_user, login_user
 from crm.forms import CompanyForm
 from crm.company import Company
 import exceptions
-client = Blueprint('client', __name__, url_prefix='/company')
+client = Blueprint('client', __name__, url_prefix='/client')
 
 @client.route('/')
 def home():

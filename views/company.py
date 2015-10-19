@@ -3,7 +3,9 @@ from flask_login import current_user
 from crm.forms import CompanyForm
 from crm.company import Company
 import exceptions
+
 company = Blueprint('company', __name__, url_prefix='/company')
+
 
 @company.route('/')
 def home():
@@ -18,6 +20,7 @@ def home():
         flash("Sorry, it seems you were trying to access an invalid company.")
         return url_for('company.new')
     return render_template('company/home.html', company=company.data)
+
 
 @company.route('/new/', methods=['GET', 'POST'])
 def new():
@@ -39,6 +42,7 @@ def new():
         return redirect(url_for('company.home'))
     return render_template('company/new.html', form=form)
 
+
 @company.route('/edit/', methods=['GET', 'POST'])
 def edit():
     """
@@ -52,8 +56,8 @@ def edit():
         return redirect(url_for('company.new'))
     if request.method == 'POST' and form.validate():
         information = {'name': form.name.data,
-                    'phone_number': form.phone_number.data,
-                    'address': form.address.data}
+                       'phone_number': form.phone_number.data,
+                       'address': form.address.data}
         company.change_information(**information)
         #
         # store company PK, we'll have to get the company each time we
