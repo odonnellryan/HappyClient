@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, flash, session, redirect, url_for
-from user.forms import NewUserForm, LoginForm
-from user.user import User
-from crm.company import Company
+from user.forms import LoginForm
+from views.forms import NewUserForm, LoginForm
+from db import User
+from tests.company import Company
 from flask_login import login_user, login_required, current_user, logout_user
 users = Blueprint('users', __name__, url_prefix='/users')
 import exceptions
@@ -23,7 +24,7 @@ def register():
         company = Company(pk=session['company'])
         user.create(name=form.name, plaintext_password=form.password.data, email=form.email.data, title=form.title.data,
                     secret_question=form.secret_question.data, plaintext_secret_answer=form.secret_answer.data,
-                    phone_number=form.phone_number.data, company=company,
+                    phone_number=form.phone_number.data, company=company.data.pk,
                     authentication_level=1)
         flash('Thanks for registering!')
         return form.redirect()

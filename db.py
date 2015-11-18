@@ -1,5 +1,6 @@
 from peewee import IntegerField, Model, TextField, PrimaryKeyField, \
     ForeignKeyField, DecimalField, DateTimeField, SqliteDatabase, PostgresqlDatabase
+from bcrypt import gensalt, hashpw
 import datetime
 import config
 
@@ -20,20 +21,73 @@ class Company(HappyClient):
     phone_number = TextField(null=False, default=None)
     address = TextField(null=True, default=None)
 
+    def check_user_authentication(self, user):
+        return user.company.pk == self.pk
+
 
 class User(HappyClient):
     pk = PrimaryKeyField()
     # 1 = owner, 2 = admin, 3 = user
     authentication_level = IntegerField(null=False, default=3)
     name = TextField(null=False, default=None)
-    password = TextField(null=False, default=None)
+    password = TextField(null=True, default=None)
     email = TextField(null=False, default=None)
     title = TextField(null=True, default=None)
     forgot_password = TextField(null=True, default=None)
     secret_question = TextField(null=False, default=None)
-    secret_answer = TextField(null=False, default=None)
+    secret_answer = TextField(null=True, default=None)
     phone_number = TextField(null=False, default=None)
-    company = ForeignKeyField(Company, related_name='user')
+    company = ForeignKeyField(Company, related_name='users')
+
+    def validate_secret(self, plaintext_secret_answer):
+        plaintext_secret_answer = ("".join(plaintext_secret_answer.split())).lower().encode('utf-8')
+        if hashpw(plaintext_secret_answer, self.secret_answer) == self.secret_answer:
+            return True
+        return False
+
+    def is_authenticated(self):
+        return True
+
+    def validate_login(self, plaintext_password=None, admin=None):
+        if admin:
+            if admin.authentication_level == 1 and admin.company.pk == self.company.pk:
+                return True
+        if plaintext_password:
+            try:
+                _plaintext_password = plaintext_password.encode('utf-8')
+            except AttributeError:
+                _plaintext_password = plaintext_password
+            if hashpw(_plaintext_password, self.password) == self.password:
+                return True
+        return False
+
+    def is_active(self):
+        # TODO: add inactive users!
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def save(self, *args, **kwargs):
+        self.email = self.email.lower()
+        return super(User, self).save(*args, **kwargs)
+
+    def set_secret_answer(self, plaintext_secret_answer):
+        plaintext_secret_answer = ("".join(plaintext_secret_answer.split())).lower()
+        try:
+            plaintext_secret_answer = plaintext_secret_answer.encode('utf-8')
+        except AttributeError:
+            pass
+        self.secret_answer = hashpw(plaintext_secret_answer, gensalt())
+
+    def set_password(self, plaintext_password):
+        try:
+            plaintext_password = plaintext_password.encode('utf-8')
+        except AttributeError:
+            pass
+        self.password = hashpw(plaintext_password, gensalt())
+        return super(User, self).save()
+
 
 
 class Client(HappyClient):
@@ -47,8 +101,11 @@ class Client(HappyClient):
     company = ForeignKeyField(Company, related_name='clients')
     user = ForeignKeyField(User, related_name="clients")
 
+    def check_user_authentication(self, user):
+        return user.company.pk == self.company.pk
 
-class Interaction(HappyClient):
+
+class   Interaction(HappyClient):
     pk = PrimaryKeyField()
     client = ForeignKeyField(Client, related_name="interactions")
     company = ForeignKeyField(Company, related_name="interactions")

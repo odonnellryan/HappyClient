@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, session, redirect, url_for
 from flask_login import current_user, login_user
-from crm.forms import CompanyForm
-from crm.company import Company
+from tests.forms import CompanyForm
+from tests.company import Company
 import exceptions
 client = Blueprint('client', __name__, url_prefix='/client')
 
