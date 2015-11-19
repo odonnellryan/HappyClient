@@ -12,6 +12,10 @@ body {
     font-family: 'Lato', sans-serif;
     font-size: 20px;
     text-decoration: none;
+    background: #fff;
+}
+html, body{
+    background-color: #fff !important;
 }
 
 /* below are text-styles  */
@@ -123,18 +127,20 @@ hr {
 
 input {
     min-width: 50%;
-    margin-top: 1em;
+    margin-right: 3em;
 }
 
 textarea {
-    min-width: 50%;
-    margin-top: 1em;
+    width: 50%;
+    max-width: 50%;
+    height: 150px;
+    margin-right: 3em;
 }
 
 /*styles on divs and other stuff similar to that - basic page styling*/
 
 .form-box {
-    max-width:400px;
+    max-width:500px;
     border: 1px solid;
     border-radius: 10px;
     border-color: #d0d0d0;
@@ -203,6 +209,21 @@ div.action-bar {
     color:#fff;
 }
 
+.white-box-button {
+    color: #fff;
+    padding-top:.3em;
+    padding-bottom: .4em;
+    padding-left: .7em;
+    padding-right: .7em;
+    margin-left:.5em;
+    margin-right:.5em;
+    display: inline-block;
+    background-color:  transparent;
+    border-radius: .25em;
+    border: 1px solid #fff;
+}
+
+
 .orange-box-button {
     color: #fff;
     padding-top:.3em;
@@ -212,13 +233,13 @@ div.action-bar {
     margin-left:.5em;
     margin-right:.5em;
     display: inline-block;
-    background-color:  #fc7700;
-    border-radius: .5em;
+    background-color:  #E77500;
+    border-radius: .25em;
 }
 
 .orange-box-button:hover {
     color: #fff;
-    background-color: #f42a00;
+    background-color: #f46700;
 }
 
 span.display_tag {
@@ -254,9 +275,9 @@ span.tags a:hover {
     border-radius: 6px;
     color: #fff;
     font-family: 'Lato', sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
     text-decoration: none;
-    padding: .5em;
+    padding: .5em 1em;
     cursor: hand;
     border: none;
     margin: 1em auto;
@@ -346,7 +367,7 @@ span.tags a:hover {
 /* additional div styling */
 
 .center {
-    margin: auto;
+    margin: 0 auto;
     text-align: center;
 }
 
@@ -389,9 +410,9 @@ span.tags a:hover {
 .main {
     margin: 0 auto;
     padding-left: 2em;
-    padding-top: 1em;
+    padding-top: 3em;
     padding-right: 2em;
-    padding-bottom: 1em;
+    padding-bottom: 5em;
 }
 
 .content {
@@ -404,29 +425,24 @@ span.tags a:hover {
 }
 
 .footer {
-    box-shadow: 0px 1500px 0px 1500px #007090;
+    box-shadow: 0px 1500px 0px 1500px #fff;
 }
 
 .splash {
-    padding-top:2em;
-    font-size: 1.4em;
+    padding-top:3em;
+    font-size: 1.6em;
     text-align: center;
     color:#fff;
     width:100%;
-    min-height:350px;
+    min-height:500px;
     background-image: url('/static/img/splash.jpg');
     background-repeat:no-repeat;
     background-position:center;
-      text-shadow:
-   -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
 }
 
 .splash a {
+    padding:.75em 2em ;
     margin-top: 1em;
-    text-shadow: none;
 }
 
 .icon {
@@ -444,4 +460,20 @@ span.tags a:hover {
 
 .white-text {
     color: #fff;
+}
+
+#header {
+    position: relative;
+}
+
+.header_message {
+    text-align: center;
+    background-color: #fff;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    opacity: .7;
+    padding: 1em;
+    font-size: 1.2em;
+    font-weight: bold;
 }

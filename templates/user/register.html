@@ -7,7 +7,7 @@
                 <h1>
                     User Registration
                 </h1>
-            </div>
+
             <form method="POST" action="{{ url_for('users.register') }}" class="pure-form pure-form-aligned center"
               xmlns="http://www.w3.org/1999/html">
                 {{ form.hidden_tag() }}
@@ -24,6 +24,7 @@
                     {{ render_field(form.secret_answer, placeholder="secret answer") }}
                     <button type="submit" class="button b-orange">Register</button>
             </form>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -7,7 +7,7 @@
                 <h1>
                     User Login
                 </h1>
-            </div>
+
             <form method="POST" action="{{ url_for('users.login') }}" class="pure-form pure-form-aligned center"
               xmlns="http://www.w3.org/1999/html">
                 {{ form.hidden_tag() }}
@@ -18,6 +18,8 @@
                     {{ render_field(form.password, placeholder="password") }}
                     <button type="submit" class="button b-orange">Login</button>
             </form>
+
+            </div>
         </div>
     </div>
 {% endblock %}

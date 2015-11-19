@@ -5,14 +5,15 @@ import datetime
 import config
 
 if config.debug:
-    database = SqliteDatabase('C:\\test.db')
+    database = SqliteDatabase('hc.db')
 else:
     # eventually put postgres here for production
     pass
 
+
 class HappyClient(Model):
-    database = database
-    #database = PostgresqlDatabase('my_app.db')
+    class Meta:
+        database = database
 
 
 class Company(HappyClient):
@@ -45,8 +46,17 @@ class User(HappyClient):
             return True
         return False
 
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return self.pk
+
     def is_authenticated(self):
         return True
+
+    def is_anonymous(self):
+        return False
 
     def validate_login(self, plaintext_password=None, admin=None):
         if admin:
@@ -59,13 +69,6 @@ class User(HappyClient):
                 _plaintext_password = plaintext_password
             if hashpw(_plaintext_password, self.password) == self.password:
                 return True
-        return False
-
-    def is_active(self):
-        # TODO: add inactive users!
-        return True
-
-    def is_anonymous(self):
         return False
 
     def save(self, *args, **kwargs):
@@ -89,7 +92,6 @@ class User(HappyClient):
         return super(User, self).save()
 
 
-
 class Client(HappyClient):
     pk = PrimaryKeyField()
     name = TextField(null=False)
@@ -101,11 +103,23 @@ class Client(HappyClient):
     company = ForeignKeyField(Company, related_name='clients')
     user = ForeignKeyField(User, related_name="clients")
 
+    def save(self, *args, **kwargs):
+        try:
+            self.interaction_reminder_time = self.interaction_reminder_time.replace(tzinfo=None)
+        except TypeError:
+            pass
+        return super(Client, self).save(*args, **kwargs)
+
+    def safe_get(self, user, *args, **kwargs):
+        if self.check_user_authentication(user):
+            return super(Client, self).save(*args, **kwargs)
+        raise self.DoesNotExist
+
     def check_user_authentication(self, user):
         return user.company.pk == self.company.pk
 
 
-class   Interaction(HappyClient):
+class Interaction(HappyClient):
     pk = PrimaryKeyField()
     client = ForeignKeyField(Client, related_name="interactions")
     company = ForeignKeyField(Company, related_name="interactions")

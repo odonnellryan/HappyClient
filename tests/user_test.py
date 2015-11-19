@@ -46,7 +46,8 @@ class TestUsers(TestCase):
     def test_user_validation_after_update(self):
         self.create_test_data()
         test_name = "test_name"
-
+        self._user.name = test_name
+        self._user.save()
         self.assertTrue(self._user.validate_login(plaintext_password='test_password'))
 
     def test_user_secret_question(self):

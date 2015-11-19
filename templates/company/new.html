@@ -4,10 +4,9 @@
     <div class="pure-g-r main content">
         <div class="pure-u-1">
             <div class="pure-g-r form-box center">
-            <h1>
                 <div class="pure-u-1">
+            <h1>
                         Create New Company
-                </div>
             </h1>
             <form method="POST" action="{{ url_for('company.new') }}" class="pure-form pure-form-aligned center"
                   xmlns="http://www.w3.org/1999/html">
@@ -20,6 +19,7 @@
                         {{ render_field(form.address, placeholder="address") }}
                         <button type="submit" class="button b-orange">Create Company</button>
                 </form>
+                </div>
             </div>
         </div>
     </div>

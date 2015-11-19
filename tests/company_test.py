@@ -55,10 +55,3 @@ class TestCompanies(TestCase):
         self.assertEqual(_test_company.name, "testing_name")
         self.assertEqual(_test_company.phone_number, "9999999999")
         self.assertEqual(_test_company.address, "test_location")
-
-
-
-
-
-suite = TestLoader().loadTestsFromTestCase(TestCompanies)
-TextTestRunner(verbosity=2).run(suite)

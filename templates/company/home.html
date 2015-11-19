@@ -8,8 +8,12 @@
             </div>
             <hr>
             <div class="pure-u-2-3">
-                <form method="POST" class="pure-form" action="/new/" xmlns="http://www.w3.org/1999/html">
-                    <input name="client" type="text" placeholder="Search your Clients">
+                <form method="POST" class="pure-form" action="{{ url_for('client.new') }}" xmlns="http://www.w3.org/1999/html">
+                    {{ form.hidden_tag() }}
+                    {% if form.csrf_token.errors %}
+                        <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
+                    {% endif %}
+                    <input name="name" type="text" placeholder="Search your Clients">
                     <button type="submit" class="pure-button b-orange b-search">&#x1f50d;</button>
                     <button type="submit" class="pure-button b-orange b-add"><b>+</b></button>
                 </form>

@@ -1,29 +1,20 @@
-from flask import Flask, render_template, url_for
-from flask.ext.login import LoginManager
+from flask import Flask, render_template, url_for, session, g
+from flask.ext.login import LoginManager, current_user
 from flask_wtf.csrf import CsrfProtect
-from views import users, company
+from views import users, company, client
 import config
-from db import database, User, Interaction
+from db import database, User, Interaction, Company, Client
 from peewee import OperationalError
-
-from flask.ext.login import AnonymousUserMixin
-
-
-class Anonymous(AnonymousUserMixin):
-    def __init__(self):
-        self.is_validated = 'Guest'
 
 
 def create_tables():
     database.connect()
-    # try to create the tables (first run) if exception is thrown,
-    # pass. Can probably use some other way to check this but for now
-    # it is fine
-    try:
-        database.create_tables([Interaction, User])
-    except OperationalError as e:
-        print(e)
-        pass
+    tables = [Interaction, User, Company, Client]
+    for table in tables:
+        try:
+            database.create_table(table)
+        except OperationalError as e:
+            pass
 
 
 app = Flask(__name__)
@@ -39,6 +30,7 @@ CsrfProtect(app)
 app.secret_key = 'super secret key'
 app.register_blueprint(users.users)
 app.register_blueprint(company.company)
+app.register_blueprint(client.client)
 
 
 @login_manager.user_loader
@@ -53,7 +45,16 @@ def load_user(user_pk):
 
 
 @app.before_request
-def _db_connect():
+def before_request():
+    create_tables()
+    if 'company' in session:
+        try:
+            g.company = Company().get(Company.pk == session['company'] )
+        except Company.DoesNotExist:
+            session.pop('company')
+    if current_user.is_authenticated():
+        g.company = current_user.company
+        session['company'] = g.company.pk
     database.connect()
 
 
@@ -65,6 +66,7 @@ def _db_close(exec):
 
 @app.route('/')
 def index():
+    print(current_user)
     return render_template('index.html')
 
 
@@ -77,5 +79,4 @@ if not app.debug:
     app.logger.addHandler(file_handler)
 
 if __name__ == '__main__':
-    create_tables()
     app.run(port=5050)

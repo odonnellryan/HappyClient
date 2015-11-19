@@ -15,28 +15,18 @@ class TestClients(unittest.TestCase):
             super(TestClients, self).run(result)
 
     def create_test_data(self):
-        self._company = company.Company()
-        self._company.create_company('test_name2', '12234567893', '123 test road4, testville test')
-        self._user = user.User()
-        self._user.create('test_name', 'test_password', 'ryan@test.com', 'the_boss', 'what is the answer?', '42',
-                          '1234567891', authentication_level=1, company=self._company)
-        self._client = client.Client()
-        self._client.create_client(self._user, "test_client", "contact info")
+        self._company = Company().create(name='test_name', phone_number='1223456789',
+                                         address='123 test road, testville test')
+        self._user = User().create(name='test_name', email='ryan@test.com', title='the_boss',
+                          secret_question='what is the answer?',
+                            phone_number='1234567891', authentication_level=3, company=self._company.pk)
+        self._client = Client().create(user=self._user.pk, name="test_client", contact_information="contact info",
+                                       company=self._company.pk)
 
     def test_client_creation(self):
         self.create_test_data()
-        self.assertEqual(self._client.data.name, 'test_client')
-        self.assertEqual(self._client.data.contact_information, 'contact info')
+        self.assertEqual(self._client.name, 'test_client')
+        self.assertEqual(self._client.contact_information, 'contact info')
 
     def test_client_authentication(self):
-        self.fail("Not yet implemented")
-
-    def test_get_client(self):
-        self.fail("Not yet implemented")
-
-    def test_change_information(self):
-        self.fail("Not yet implemented")
-
-
-suite = unittest.TestLoader().loadTestsFromTestCase(TestClients)
-unittest.TextTestRunner(verbosity=2).run(suite)
+        self.assertTrue(self._client.check_user_authentication(self._user))

@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, flash, session, redirect, url_for
+from flask import Blueprint, render_template, request, flash, session, redirect, url_for, g
 from flask_login import current_user, login_user
-from tests.forms import CompanyForm
-from tests.company import Company
+from db import Company, Client, User
 import exceptions
+from views.forms import NewClientForm
 client = Blueprint('client', __name__, url_prefix='/client')
 
 @client.route('/')
@@ -21,23 +21,15 @@ def home():
 
 @client.route('/new/', methods=['GET', 'POST'])
 def new():
-    # also check if user logged in
-    # since all users _must_ have an associated company
-    form = CompanyForm(request.form)
-    if 'company' in session:
-        return redirect(url_for('company.home'))
-    if request.method == 'POST' and form.validate():
-        company = Company()
-        company.create_company(form.name.data, form.phone_number.data,
-                               form.address.data)
-        #
-        # store company PK, we'll have to get the company each time we
-        # would like to view it
-        # can probably store this in flask login as well, possibly
-        #
-        session['company'] = company.data.pk
-        return redirect(url_for('company.home'))
-    return render_template('company/new.html', form=form)
+    form = NewClientForm(request.form)
+    if request.method == 'POST' and form.add_client.data and form.validate():
+        client = Client().create(name=form.name.data, contact_information=form.contact_information.data,
+                                 location=form.location.data, notes=form.notes.data,
+                                 interaction_reminder_time=form.interaction_reminder_time.data,
+                                 interaction_reminder_notes=form.interaction_reminder_notes.data, company=g.company.pk,
+                                 user=current_user.pk)
+        return redirect(url_for('company.home', client_id=client.pk))
+    return render_template('client/new.html', form=form)
 
 @client.route('/edit/', methods=['GET', 'POST'])
 def edit():
@@ -45,7 +37,7 @@ def edit():
     edits the company information
     :return:
     """
-    form = CompanyForm(request.form)
+    form = NewClientForm(request.form)
     if 'company' in session:
         company = Company(pk=session['company'])
     else:
