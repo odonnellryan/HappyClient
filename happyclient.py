@@ -1,7 +1,7 @@
-from flask import Flask, render_template, url_for, session, g
+from flask import Flask, render_template, url_for, session, g, redirect
 from flask.ext.login import LoginManager, current_user
 from flask_wtf.csrf import CsrfProtect
-from views import users, company, client
+from views import users, company, client, api
 import config
 from db import database, User, Interaction, Company, Client
 from peewee import OperationalError
@@ -31,7 +31,7 @@ app.secret_key = 'super secret key'
 app.register_blueprint(users.users)
 app.register_blueprint(company.company)
 app.register_blueprint(client.client)
-
+app.register_blueprint(api.api)
 
 @login_manager.user_loader
 def load_user(user_pk):
@@ -49,9 +49,11 @@ def before_request():
     create_tables()
     if 'company' in session:
         try:
-            g.company = Company().get(Company.pk == session['company'] )
+            g.company = Company().get(Company.pk == session['company'])
         except Company.DoesNotExist:
             session.pop('company')
+    if 'recent_clients' in session:
+        g.recent_clients = session['recent_clients']
     if current_user.is_authenticated():
         g.company = current_user.company
         session['company'] = g.company.pk
@@ -66,7 +68,8 @@ def _db_close(exec):
 
 @app.route('/')
 def index():
-    print(current_user)
+    if current_user.is_authenticated():
+        return redirect(url_for('company.home'))
     return render_template('index.html')
 
 

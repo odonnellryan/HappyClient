@@ -1,23 +1,24 @@
 from flask import Blueprint, render_template, request, flash, session, redirect, url_for, g
 from flask_login import current_user, login_user
-from db import Company, Client, User
-import exceptions
+from db import Company, Client
 from views.forms import NewClientForm
 client = Blueprint('client', __name__, url_prefix='/client')
 
+@client.route('/<int:client_pk>/')
 @client.route('/')
-def home():
-    if current_user.is_authenticated:
-        session['company'] = current_user.data.company.pk
-    if not 'company' in session:
-        return redirect(url_for('company.new'))
+def home(client_pk=None):
+    form = NewClientForm(request.form)
     try:
-        company = Company(pk=session['company'])
-    except exceptions.CompanyInvalid:
-        session.pop('company')
-        flash("Sorry, it seems you were trying to access an invalid company.")
-        return url_for('company.new')
-    return render_template('company/home.html', company=company.data)
+        client = Client().get(Client.pk == client_pk)
+        form.name.data = client.name
+        form.location.data = client.location
+        form.contact_information.data = client.contact_information
+        form.interaction_reminder_notes.data = client.interaction_reminder_notes
+        form.interaction_reminder_time.data = client.interaction_reminder_time
+    except Client.DoesNotExist:
+        client = None
+
+    return render_template('client/home.html', client=client, form=form)
 
 @client.route('/new/', methods=['GET', 'POST'])
 def new():

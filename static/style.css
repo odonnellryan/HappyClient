@@ -71,6 +71,7 @@ blockquote p {
 
 h1, h2, h3, h4, h5, h6 {
     padding:.5em;
+    padding-bottom: .25em;
     font-weight: bold;
 }
 
@@ -146,12 +147,7 @@ textarea {
     border-color: #d0d0d0;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#576bb2+0,62ace5+100
     background: #576bb2; /* Old browsers */
-    background: -moz-linear-gradient(top,  #576bb2 0%, #69aab2 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #576bb2), color-stop(100%, #69aab2)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #576bb2 0%, #69aab2 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #576bb2 0%,#62ace5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #576bb2 0%,#62ace5 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #007090 0%, #45a0a5 100%); /* W3C */
+    background-color: #5793c5;
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#576bb2', endColorstr='#62ace5',GradientType=0 ); /* IE6-9 */
     color:#fff;
 }
@@ -476,4 +472,18 @@ span.tags a:hover {
     padding: 1em;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.recent-clients {
+    padding-left: 1em;
+    font-size: 16px;
+}
+
+.client-result {
+    display: block;
+    padding-left: 1em;
+}
+
+.spacer {
+    display: block; height: 1em; width: 100%;
 }
