@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% from "./_form_helper.html" import render_field %}
 {% block body %}
+    <div class="spacer"></div>
     <div class="content main">
         <div class="pure-g-r form-box center">
             <div class="pure-u-1">
+            <div class="spacer"></div>
                 <h1>
                     User Registration
                 </h1>
-
+            <div class="spacer"></div>
             <form method="POST" action="{{ url_for('users.register') }}" class="pure-form pure-form-aligned center"
               xmlns="http://www.w3.org/1999/html">
                 {{ form.hidden_tag() }}

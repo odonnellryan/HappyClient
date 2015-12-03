@@ -14,6 +14,8 @@ def search_clients(search_term=None):
     :return:
     """
 
+    cached_results_length = 10
+
     if 'recent_clients' not in session:
         session['recent_clients'] = OrderedDict(last=True)
 
@@ -31,13 +33,11 @@ def search_clients(search_term=None):
 
     results = [model_to_dict(client) for client in clients]
 
-    for item in results:
+    for item in results[:cached_results_length]:
         session['recent_clients'][item['name']] = item
 
-    while len(session['recent_clients']) > 10:
+    while len(session['recent_clients']) > cached_results_length:
         session['recent_clients'].pop()
-
-    print(session['recent_clients'])
 
     values = {
         'clients': results

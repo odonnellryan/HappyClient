@@ -72,6 +72,7 @@ blockquote p {
 h1, h2, h3, h4, h5, h6 {
     padding:.5em;
     padding-bottom: .25em;
+    padding-left: 16px;
     font-weight: bold;
 }
 
@@ -131,7 +132,12 @@ input {
     margin-right: 3em;
 }
 
+input#search {
+    margin-right: 1em;
+}
+
 textarea {
+    font-family: 'Lato', sans-serif;
     width: 50%;
     max-width: 50%;
     height: 150px;
@@ -486,4 +492,27 @@ span.tags a:hover {
 
 .spacer {
     display: block; height: 1em; width: 100%;
+}
+
+.datepicker {
+    width: 45%;
+    margin: 0 auto;
+    display: inline-block;
+    padding: .5em;
+}
+
+.timepicker {
+    width: 20%;
+    display: inline-block;
+}
+
+.bootstrap-datetimepicker-widget {
+    width: 60%;
+    margin-left: 25%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.timepicker-hours, .timepicker-minutes {
+    margin: .5em 1em;
 }

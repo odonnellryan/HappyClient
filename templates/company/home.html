@@ -14,9 +14,9 @@
                     <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
                 {% endif %}
                 <input id="search" name="name" type="text" placeholder="Search your Clients">
-                <button type="submit" class="pure-button b-orange b-search">&#x1f50d;</button>
                 <button type="submit" class="pure-button b-orange b-add"><b>+</b></button>
             </form>
+            <div class="spacer"></div>
             <div id="results">
 
             </div>
@@ -33,7 +33,7 @@
         <div class="pure-u-1">
         <h5>Recent Clients: </h5>
             {% for client in g.recent_clients %}
-               <a href="{{ g.recent_clients[client].pk }}" class="recent-clients">{{ g.recent_clients[client].name }}</a>
+               <a href="{{ url_for('client.home', client_pk=g.recent_clients[client].pk) }}" class="recent-clients">{{ g.recent_clients[client].name }}</a>
             {% endfor %}
         </div>
     </div>
@@ -51,16 +51,22 @@
         var buildResults = function(data) {
             var rLink = "<a class='client-result'></a>";
             var rBox = "<div class='results-box'></div>";
+
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
+                    var found = false;
                     var resultContainer = $(rBox);
-                    resultContainer.html("<h2>" + key.charAt(0).toUpperCase() + key.slice(1) + "</h2>");
+                    var resultType = key.charAt(0).toUpperCase() + key.slice(1);
+                    resultContainer.html("<h2>" + resultType + "</h2>");
                     var resultData = data[key];
                     for (var i = 0; i < resultData.length; i++) {
+                        found = true;
                         var resultLink = $(rLink);
                         resultLink.html(resultData[i].name);
                         resultLink.attr('href', '/client/' + resultData[i].pk);
                         resultContainer.append(resultLink);
+                    } if (!found) {
+                        resultContainer.append("Sorry, there were no " + resultType + "found.");
                     }
                     results.append(resultContainer);
                 }
@@ -76,7 +82,6 @@
                 results.html("Problem with request");
             });
         };
-
         $(document).ready(function(){
             if (search.val()) {
                 performSearch(search.val());
@@ -84,9 +89,14 @@
         });
         search.on("keyup", function() {
             var searchTerm = $(this).val();
-            delay(function() {
-                performSearch(searchTerm);
-            }, 500)
-        })
+            if (searchTerm) {
+                delay(function() {
+                    results.empty();
+                    performSearch(searchTerm);
+                }, 500)
+            } else {
+                results.empty();
+            }
+        });
     </script>
 {% endblock %}

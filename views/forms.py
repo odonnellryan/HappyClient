@@ -1,5 +1,6 @@
 from utilities import helper_functions
-from wtforms import StringField, TextAreaField, DateTimeField, PasswordField, SubmitField
+from wtforms import StringField, TextAreaField, PasswordField, SubmitField
+from wtforms_components import DateTimeField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
@@ -7,7 +8,7 @@ class NewClientForm(helper_functions.RedirectForm):
     name = StringField('Name', validators=[DataRequired()])
     contact_information = TextAreaField('Contact Information')
     location = StringField('Location')
-    interaction_reminder_time = StringField('Set contact reminder')
+    interaction_reminder_time = DateTimeField('Set contact reminder')
     interaction_reminder_notes = TextAreaField('Add notes regarding contact reminder')
     notes = TextAreaField('Notes')
     add_client = SubmitField('Add Client')

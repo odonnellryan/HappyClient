@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, flash, session, redirect, url_for, g
-from flask_login import current_user, login_user
+from flask_login import current_user
 from db import Company, Client
 from views.forms import NewClientForm
+from utilities import flashed_errors
 client = Blueprint('client', __name__, url_prefix='/client')
 
 @client.route('/<int:client_pk>/')
@@ -9,14 +10,16 @@ client = Blueprint('client', __name__, url_prefix='/client')
 def home(client_pk=None):
     form = NewClientForm(request.form)
     try:
-        client = Client().get(Client.pk == client_pk)
+        client = Client().get(Client.pk == client_pk, Client.company == current_user.company.pk)
         form.name.data = client.name
         form.location.data = client.location
         form.contact_information.data = client.contact_information
         form.interaction_reminder_notes.data = client.interaction_reminder_notes
         form.interaction_reminder_time.data = client.interaction_reminder_time
+        form.notes.data = client.notes
     except Client.DoesNotExist:
-        client = None
+        flash(flashed_errors.CLIENT_DOESNT_EXIST)
+        return redirect(url_for('company.home'))
 
     return render_template('client/home.html', client=client, form=form)
 
@@ -32,8 +35,10 @@ def new():
         return redirect(url_for('company.home', client_id=client.pk))
     return render_template('client/new.html', form=form)
 
+
+@client.route('/edit/<int:client_pk>/')
 @client.route('/edit/', methods=['GET', 'POST'])
-def edit():
+def edit(client_pk=None):
     """
     edits the company information
     :return:
