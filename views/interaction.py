@@ -3,10 +3,10 @@ from flask_login import current_user
 from db import Company, Client
 from views.forms import NewClientForm
 from utilities import flashed_errors
-client = Blueprint('client', __name__, url_prefix='/client')
+interaction = Blueprint('interaction', __name__, url_prefix='/interaction')
 
-@client.route('/<int:client_pk>/')
-@client.route('/')
+@interaction.route('/<int:client_pk>/')
+@interaction.route('/')
 def home(client_pk=None):
     form = NewClientForm(request.form)
     try:
@@ -21,7 +21,7 @@ def home(client_pk=None):
 
     return render_template('client/home.html', client=client, form=form)
 
-@client.route('/new/', methods=['GET', 'POST'])
+@interaction.route('/new/', methods=['GET', 'POST'])
 def new():
     form = NewClientForm(request.form)
     if request.method == 'POST' and form.add_client.data and form.validate():
@@ -33,8 +33,8 @@ def new():
     return render_template('client/new.html', form=form)
 
 
-@client.route('/edit/<int:client_pk>/')
-@client.route('/edit/', methods=['GET', 'POST'])
+@interaction.route('/edit/<int:client_pk>/')
+@interaction.route('/edit/', methods=['GET', 'POST'])
 def edit(client_pk=None):
     """
     edits the company information

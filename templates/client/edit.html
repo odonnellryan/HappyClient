@@ -1,24 +1,37 @@
 {% extends "base.html" %}
 {% from "./_form_helper.html" import render_field %}
 {% block body %}
-    <div class="pure-g-r main content center">
-        <div class="pure-g-r form-box center">
-        <h1>
-            <div class="pure-u-1">
-                    Edit {{ form.name.data }}'s Information
-            </div>
-        </h1>
-        <form method="POST" action="{{ url_for('company.edit') }}" class="pure-form pure-form-aligned center"
-              xmlns="http://www.w3.org/1999/html">
+    <div class="pure-g-r main content">
+        <div class="pure-u-1">
+            <h1>
+                {{ client.name }}' information
+            </h1>
+        </div>
+        <hr>
+        <div class="pure-u-2-3">
+            <form method="POST" id="client-form" action="{{ url_for('client.edit', client_pk=client.pk) }}" class="pure-form pure-form-aligned center"
+                  xmlns="http://www.w3.org/1999/html">
                 {{ form.hidden_tag() }}
                 {% if form.csrf_token.errors %}
-                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
+                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and
+                        try again.
+                    </div>
                 {% endif %}
-                    {{ render_field(form.name, placeholder=form.name.data) }}
-                    {{ render_field(form.phone_number, placeholder=form.phone_number.data) }}
-                    {{ render_field(form.address, placeholder=form.address.data) }}
-                    <button type="submit" class="button b-orange">Modify Company</button>
+                {{ render_field(form.name, placeholder="Vandelay Industries") }}
+                {{ render_field(form.contact_information, placeholder="Call Art Vandeley at: 555-555-5555") }}
+                {{ render_field(form.location, placeholder="186 W 81st St, New York, NY 10024") }}
+                {{ render_field(form.notes, placeholder="Recently bought 1,000,000 widgets.") }}
+                <button type="submit" class="button b-orange">Save Edits</button>
             </form>
+        </div>
+        <div class="pure-u-1-3">
+            <h4>
+                Upcoming interactions
+            </h4>
+
+            <p>
+                No upcoming interactions
+            </p>
         </div>
     </div>
 {% endblock %}

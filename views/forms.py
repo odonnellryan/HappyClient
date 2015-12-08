@@ -1,15 +1,30 @@
 from utilities import helper_functions
 from wtforms import StringField, TextAreaField, PasswordField, SubmitField
-from wtforms_components import DateTimeField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+import datetime
+import operator
+
+
+class DateAfterValidator:
+    def __init__(self, op, obj, message=None):
+        self.obj = obj
+        self.operator = op
+        if not message:
+            message = u'Field does not meet date requirements.'
+        self.message = message
+
+    def __call__(self, form, field):
+        l = field.data
+        date = datetime.datetime.strptime(l, "%m/%d/%Y %I:%M %p")
+        if not self.operator(date, self.obj):
+            raise ValidationError(self.message)
 
 
 class NewClientForm(helper_functions.RedirectForm):
     name = StringField('Name', validators=[DataRequired()])
     contact_information = TextAreaField('Contact Information')
     location = StringField('Location')
-    interaction_reminder_time = DateTimeField('Set contact reminder')
-    interaction_reminder_notes = TextAreaField('Add notes regarding contact reminder')
+
     notes = TextAreaField('Notes')
     add_client = SubmitField('Add Client')
 
@@ -52,3 +67,10 @@ class LoginForm(helper_functions.RedirectForm):
         'Password',
         validators=[DataRequired()]
     )
+
+class InteractionForm(helper_functions.Form):
+    interaction_reminder_time = StringField('Interaction reminder',
+                       validators=[DataRequired(),
+                                   DateAfterValidator(operator.ge, datetime.datetime.now(),
+                                                      message="Date must be sometime in the future.")])
+    interaction_reminder_notes = TextAreaField('Interaction notes')

@@ -67,7 +67,11 @@ class User(HappyClient):
                 _plaintext_password = plaintext_password.encode('utf-8')
             except AttributeError:
                 _plaintext_password = plaintext_password
-            if hashpw(_plaintext_password, self.password) == self.password:
+            try:
+                stored_password = self.password.encode('utf-8')
+            except AttributeError:
+                stored_password = self.password
+            if hashpw(_plaintext_password, stored_password) == self.password:
                 return True
         return False
 
@@ -106,7 +110,7 @@ class Client(HappyClient):
     def save(self, *args, **kwargs):
         try:
             self.interaction_reminder_time = self.interaction_reminder_time.replace(tzinfo=None)
-        except TypeError:
+        except (TypeError, AttributeError):
             pass
         return super(Client, self).save(*args, **kwargs)
 

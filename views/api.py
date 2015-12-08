@@ -17,27 +17,27 @@ def search_clients(search_term=None):
     cached_results_length = 10
 
     if 'recent_clients' not in session:
-        session['recent_clients'] = OrderedDict(last=True)
+        session['recent_clients'] = OrderedDict()
 
     if search_term is None:
         return jsonify({'errors': "No search term"})
 
     clients = (
         Client.select().where((Client.company == g.company) & (
-            (Client.name ** search_term) |
-            (Client.contact_information ** search_term) |
-            (Client.location ** search_term) |
-            (Client.notes ** search_term))
+            (Client.name.contains(search_term)) |
+            (Client.contact_information.contains(search_term)) |
+            (Client.location.contains(search_term)) |
+            (Client.notes.contains(search_term)))
         )
     )
 
     results = [model_to_dict(client) for client in clients]
 
     for item in results[:cached_results_length]:
-        session['recent_clients'][item['name']] = item
+        session['recent_clients'][item['pk']] = item
 
     while len(session['recent_clients']) > cached_results_length:
-        session['recent_clients'].pop()
+        session['recent_clients'].pop(last=False)
 
     values = {
         'clients': results

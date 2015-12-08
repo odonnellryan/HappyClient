@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, session, redirect, url_for
+from flask import Blueprint, render_template, request, flash, session, redirect, url_for, g
 from flask_login import current_user
 from db import Company, Client
 from views.forms import NewCompanyForm, ClientSearchForm
@@ -9,6 +9,7 @@ company = Blueprint('company', __name__, url_prefix='/company')
 @company.route('/<int:client_id>/')
 @company.route('/')
 def home(client_id=None):
+
     try:
         client = Client().get(Client.pk == client_id)
     except Client.DoesNotExist:

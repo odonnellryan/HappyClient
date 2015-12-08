@@ -8,32 +8,18 @@
             </h1>
         </div>
         <hr>
-        <div class="pure-u-2-3">
-            <form method="POST" action="{{ url_for('client.edit', client_pk=client.pk) }}" class="pure-form pure-form-aligned center"
-                  xmlns="http://www.w3.org/1999/html">
+        <div class="pure-u-1">
+            <form method="POST" class="pure-form" action="{{ url_for('interaction.new') }}" xmlns="http://www.w3.org/1999/html">
                 {{ form.hidden_tag() }}
                 {% if form.csrf_token.errors %}
-                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and
-                        try again.
-                    </div>
+                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
                 {% endif %}
-                {{ render_field(form.name, placeholder="Vandelay Industries") }}
-                {{ render_field(form.contact_information, placeholder="Call Art Vandeley at: 555-555-5555") }}
-                {{ render_field(form.location, placeholder="186 W 81st St, New York, NY 10024") }}
-                {{ render_field(form.interaction_reminder_time) }}
-                {{ render_field(form.interaction_reminder_notes, placeholder="Art loves to talk Golf!") }}
-                {{ render_field(form.notes, placeholder="Recently bought 1,000,000 widgets.") }}
-                <button type="submit" class="button b-orange">Save Edits</button>
+                <input id="search" name="name" type="text" placeholder="Search your Interactions">
+                <button type="submit" class="pure-button b-orange b-add"><b>+</b></button>
             </form>
-        </div>
-        <div class="pure-u-1-3">
-            <h4>
-                Upcoming interactions
-            </h4>
-
-            <p>
-                No upcoming interactions
-            </p>
+            <div class="spacer"></div>
+            <div id="results">
+            </div>
         </div>
     </div>
 {% endblock %}

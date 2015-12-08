@@ -147,7 +147,7 @@ textarea {
 /*styles on divs and other stuff similar to that - basic page styling*/
 
 .form-box {
-    max-width:500px;
+    max-width:800px;
     border: 1px solid;
     border-radius: 10px;
     border-color: #d0d0d0;
@@ -496,6 +496,7 @@ span.tags a:hover {
 
 .datepicker {
     width: 45%;
+    min-width: 200px;
     margin: 0 auto;
     display: inline-block;
     padding: .5em;
@@ -503,6 +504,8 @@ span.tags a:hover {
 
 .timepicker {
     width: 20%;
+    min-width: 100px;
+    margin: 0 auto;
     display: inline-block;
 }
 
@@ -515,4 +518,7 @@ span.tags a:hover {
 
 .timepicker-hours, .timepicker-minutes {
     margin: .5em 1em;
+    width: 20%;
+    min-width: 500px;
 }
+

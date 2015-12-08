@@ -19,9 +19,8 @@
                     {{ render_field(form.name, placeholder="Vandelay Industries") }}
                     {{ render_field(form.contact_information, placeholder="Call Art Vandeley at: 555-555-5555") }}
                     {{ render_field(form.location, placeholder="186 W 81st St, New York, NY 10024") }}
-                    {{ render_field(form.interaction_reminder_time) }}
-                    {{ render_field(form.interaction_reminder_notes, placeholder="Art loves to talk Golf!") }}
-                    {{ render_field(form.notes, placeholder="Recently bought 1,000,000 widgets.") }}
+                    {{ render_field(form.notes, placeholder="Recently bought 1,000,000 widgets.
+                    \nArt loves to talk about Golf!") }}
                     {{ form.add_client(class="button b-orange") | safe }}
             </form>
             </div>
