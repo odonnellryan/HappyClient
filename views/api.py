@@ -17,7 +17,7 @@ def search_clients(search_term=None):
     cached_results_length = 10
 
     if 'recent_clients' not in session:
-        session['recent_clients'] = OrderedDict()
+        session['recent_clients'] = []
 
     if search_term is None:
         return jsonify({'errors': "No search term"})
@@ -34,10 +34,13 @@ def search_clients(search_term=None):
     results = [model_to_dict(client) for client in clients]
 
     for item in results[:cached_results_length]:
-        session['recent_clients'][item['pk']] = item
+        try:
+            session['recent_clients'].remove(item)
+        except ValueError:
+            pass
+        session['recent_clients'].insert(0, item)
 
-    while len(session['recent_clients']) > cached_results_length:
-        session['recent_clients'].pop(last=False)
+    session['recent_clients'] = session['recent_clients'][:10]
 
     values = {
         'clients': results

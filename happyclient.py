@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, session, g, redirect
 from flask.ext.login import LoginManager, current_user
 from flask_wtf.csrf import CsrfProtect
-from views import users, company, client, api
+from views import users, company, client, api, interaction
 import config
 from db import database, User, Interaction, Company, Client
 from peewee import OperationalError
@@ -32,6 +32,8 @@ app.register_blueprint(users.users)
 app.register_blueprint(company.company)
 app.register_blueprint(client.client)
 app.register_blueprint(api.api)
+app.register_blueprint(interaction.interaction)
+
 
 @login_manager.user_loader
 def load_user(user_pk):

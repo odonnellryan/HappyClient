@@ -1,9 +1,10 @@
 from functools import wraps
-from flask import g, request, redirect, url_for
+from flask import g
 from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import Form
-from wtforms import TextField, HiddenField
+from wtforms import HiddenField
+
 
 def login_required(f):
     @wraps(f)
@@ -17,8 +18,7 @@ def login_required(f):
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
+    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
 
 
 def get_redirect_target():
@@ -31,6 +31,7 @@ def get_redirect_target():
 
 class RedirectForm(Form):
     next = HiddenField()
+
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
         if not self.next.data:

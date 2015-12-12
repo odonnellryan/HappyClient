@@ -33,7 +33,7 @@
         <div class="pure-u-1">
         <h5>Recent Clients: </h5>
             {% for client in g.recent_clients %}
-               <a href="{{ url_for('client.home', client_pk=g.recent_clients[client].pk) }}" class="recent-clients">{{ g.recent_clients[client].name }}</a>
+               <a href="{{ url_for('client.home', client_pk=client['pk']) }}" class="recent-clients">{{ client['name'] }}</a>
             {% endfor %}
         </div>
     </div>
