@@ -49,11 +49,11 @@ def load_user(user_pk):
 @app.before_request
 def before_request():
     create_tables()
-
     if 'company' in session:
         try:
             g.company = Company().get(Company.pk == session['company'])
         except Company.DoesNotExist:
+            g.company = None
             session.pop('company')
     if 'recent_clients' in session:
         g.recent_clients = session['recent_clients']

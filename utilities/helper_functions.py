@@ -4,6 +4,8 @@ from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import Form
 from wtforms import HiddenField
+from db import Client
+from flask_login import current_user
 
 
 def login_required(f):
@@ -42,3 +44,12 @@ class RedirectForm(Form):
             return redirect(self.next.data)
         target = get_redirect_target()
         return redirect(target or url_for(endpoint, **values))
+
+def get_client(client_pk, company=None):
+    try:
+        client = Client().get(Client.pk == client_pk)
+        if not client.check_user_authentication(current_user, company=company):
+            return None
+    except Client.DoesNotExist:
+        return None
+    return client

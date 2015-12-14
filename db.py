@@ -22,8 +22,8 @@ class Company(HappyClient):
     phone_number = TextField(null=False, default=None)
     address = TextField(null=True, default=None)
 
-    def check_user_authentication(self, user):
-        return user.company.pk == self.pk
+    def check_user_authentication(self, user, company=None):
+        return user.company.pk == self.pk or company.pk == self.pk
 
 
 class User(HappyClient):
@@ -119,8 +119,8 @@ class Client(HappyClient):
             return super(Client, self).save(*args, **kwargs)
         raise self.DoesNotExist
 
-    def check_user_authentication(self, user):
-        return user.company.pk == self.company.pk
+    def check_user_authentication(self, user, company=None):
+        return user.company.pk == self.company.pk or company.pk == self.company.pk
 
 
 class Interaction(HappyClient):
@@ -133,5 +133,7 @@ class Interaction(HappyClient):
     # if a sale was closed you will put in the dollar amount here
     sale = DecimalField(decimal_places=2)
     time = DateTimeField(default=datetime.datetime.now)
-    money_owed = DecimalField(decimal_places=2)
-    user = ForeignKeyField(User, related_name="interactions")
+    user = ForeignKeyField(User, related_name="interactions", null=True)
+
+    def check_user_authentication(self, user, company=None):
+        return user.company.pk == self.company.pk or company.pk == self.company.pk

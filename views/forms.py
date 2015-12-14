@@ -1,6 +1,6 @@
 from utilities import helper_functions
-from wtforms import StringField, TextAreaField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+from wtforms import StringField, TextAreaField, PasswordField, SubmitField, RadioField
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, AnyOf
 import datetime
 import operator
 
@@ -24,7 +24,6 @@ class NewClientForm(helper_functions.RedirectForm):
     name = StringField('Name', validators=[DataRequired()])
     contact_information = TextAreaField('Contact Information')
     location = StringField('Location')
-
     notes = TextAreaField('Notes')
     add_client = SubmitField('Add Client')
 
@@ -69,8 +68,12 @@ class LoginForm(helper_functions.RedirectForm):
     )
 
 class InteractionForm(helper_functions.Form):
+    add_interaction = SubmitField('Add Interaction')
     interaction_reminder_time = StringField('Interaction reminder',
                        validators=[DataRequired(),
                                    DateAfterValidator(operator.ge, datetime.datetime.now(),
-                                                      message="Date must be sometime in the future.")])
+                       message="Date must be sometime in the future.")])
+    rating = RadioField('Please leave a rating', choices=[("1", "1"), ("2", "2"), ("3", "3")],
+                        validators=[AnyOf(['1', '2', '3'])])
     interaction_reminder_notes = TextAreaField('Interaction notes')
+    sale = StringField('Sale amount', default=None)
