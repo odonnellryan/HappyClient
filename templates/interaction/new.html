@@ -17,9 +17,14 @@
                                 try again.
                             </div>
                         {% endif %}
-                        {{ render_field(form.rating) }}
-                        {{ render_field(form.interaction_reminder_notes, placeholder="Had a great talk with Art today, he wants
-                        to buy lots of gadgets soon. Call him back to set a time to discuss!") }}
+                        <div class="rating">
+                            <input type="radio" name="rating" value="0" checked /><span id="hide"></span>
+                            <input type="radio" name="rating" value="1" /><span></span>
+                            <input type="radio" name="rating" value="2" /><span></span>
+                            <input type="radio" name="rating" value="3" /><span></span>
+                        </div>
+                        {{ render_field(form.interaction_reminder_notes,
+                        placeholder="Had a great talk with Art today, he wants to buy lots of gadgets soon. Call him back to set a time to discuss!") }}
                         {{ render_field(form.interaction_reminder_time) }}
                         {{ form.add_interaction(class="button b-orange") | safe }}
                     </form>

@@ -495,31 +495,60 @@ span.tags a:hover {
     display: block; height: 1em; width: 100%;
 }
 
-.datepicker {
-    width: 45%;
-    min-width: 200px;
-    margin: 0 auto;
-    display: inline-block;
-    padding: .5em;
+
+
+#hide {
+    display:none;
 }
 
-.timepicker {
-    width: 20%;
-    min-width: 100px;
-    margin: 0 auto;
-    display: inline-block;
+.rating {
+    margin: 2em;
+    position: relative;
+    color: #fca700;
 }
 
-.bootstrap-datetimepicker-widget {
-    width: 60%;
-    margin-left: 25%;
-    margin-bottom: 1em;
-    margin-top: 1em;
+.rating input {
+    position:absolute;
+    top: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    -khtml-opacity:0;
+    opacity:0;
+    cursor:pointer;
+    width:50px;
 }
 
-.timepicker-hours, .timepicker-minutes {
-    margin: .5em 1em;
-    width: 20%;
-    min-width: 500px;
+.rating span {
+    width:50px;
+    height:50px;
+    line-height:16px;
+    padding:2px 20px 2px 0; /* 1px FireFox fix */
+
 }
 
+.rating span:after {
+    font-size: 50px;
+    content: "\2605";
+    font-family: 'FontAwesome';
+}
+
+/* Change span immediately following the checked radio */
+
+.rating input:checked + span:after {
+    font-size: 50px;
+    content: "\2605";
+    font-family: 'FontAwesome';
+}
+
+/* Reset all remaining stars back to default background.
+   This supersedes the above due to its ordering. */
+
+.rating input:checked + span ~ span:after {
+    font-size: 50px;
+    content: "\2606";
+    font-family: 'FontAwesome';
+}
+
+label[for=comments] {
+    text-align: center;
+}
