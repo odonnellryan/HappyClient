@@ -420,6 +420,7 @@ span.tags a:hover {
 .content {
     max-width:1300px;
     margin:0 auto;
+    margin-top: 1em;
 }
 
 .position-right {

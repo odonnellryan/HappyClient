@@ -2,26 +2,29 @@
 {% from "./_form_helper.html" import render_field %}
 {% block body %}
     <div class="pure-g-r main content center">
-    <div class="pure-u-1">
-        <div class="pure-g-r form-box center">
-            <div class="pure-u-1">
-        <h1>
-                    Add New Interaction
-        </h1>
-        <form method="POST" action="{{ url_for('interaction.new', client_pk=client.pk) }}" class="pure-form pure-form-aligned center"
-              xmlns="http://www.w3.org/1999/html">
-                {{ form.hidden_tag() }}
-                {% if form.csrf_token.errors %}
-                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
-                {% endif %}
-                    {{ render_field(form.rating) }}
-                    {{ render_field(form.interaction_reminder_notes, placeholder="Had a great talk with Art today, he wants
+        <div class="pure-u-1">
+            <div class="pure-g-r form-box center">
+                <div class="pure-u-1">
+                    <h1>
+                        Add New Interaction
+                    </h1>
+                    <form method="POST" action="{{ url_for('interaction.new', client_pk=client.pk) }}"
+                          class="pure-form pure-form-aligned center"
+                          xmlns="http://www.w3.org/1999/html">
+                        {{ form.hidden_tag() }}
+                        {% if form.csrf_token.errors %}
+                            <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and
+                                try again.
+                            </div>
+                        {% endif %}
+                        {{ render_field(form.rating) }}
+                        {{ render_field(form.interaction_reminder_notes, placeholder="Had a great talk with Art today, he wants
                         to buy lots of gadgets soon. Call him back to set a time to discuss!") }}
-                    {{ render_field(form.interaction_reminder_time) }}
-                    {{ form.add_interaction(class="button b-orange") | safe }}
-            </form>
+                        {{ render_field(form.interaction_reminder_time) }}
+                        {{ form.add_interaction(class="button b-orange") | safe }}
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}

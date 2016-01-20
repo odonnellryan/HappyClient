@@ -4,15 +4,18 @@
     <div class="pure-g-r main content">
         <div class="pure-u-1">
             <h1>
-                {{ client.name }}'s information
+                {{ client.name }}'s interactions
             </h1>
         </div>
         <hr>
         <div class="pure-u-1">
-            <form method="POST" class="pure-form" action="{{ url_for('interaction.new', client_pk=client.pk) }}" xmlns="http://www.w3.org/1999/html">
+            <form method="POST" class="pure-form" action="{{ url_for('interaction.new', client_pk=client.pk) }}"
+                  xmlns="http://www.w3.org/1999/html">
                 {{ form.hidden_tag() }}
                 {% if form.csrf_token.errors %}
-                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try again.</div>
+                    <div class="warning">Sorry, it seems your request is invalid. Please refresh this page and try
+                        again.
+                    </div>
                 {% endif %}
                 <input id="search" name="name" type="text" placeholder="Search your Interactions">
                 <button type="submit" class="pure-button b-orange b-add"><b>+</b></button>

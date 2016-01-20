@@ -25,6 +25,7 @@ def register():
         user.set_password(form.password.data)
         user.set_secret_answer(form.secret_answer.data)
         flash('Thanks for registering!')
+        login_user(user)
         return form.redirect()
     return render_template('user/register.html', form=form)
 

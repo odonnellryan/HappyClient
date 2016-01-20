@@ -63,15 +63,9 @@ class User(HappyClient):
             if admin.authentication_level == 1 and admin.company.pk == self.company.pk:
                 return True
         if plaintext_password:
-            try:
-                _plaintext_password = plaintext_password.encode('utf-8')
-            except AttributeError:
-                _plaintext_password = plaintext_password
-            try:
-                stored_password = self.password.encode('utf-8')
-            except AttributeError:
-                stored_password = self.password
-            if hashpw(_plaintext_password, stored_password) == self.password:
+            plaintext_password = encode_string(plaintext_password)
+            stored_password = encode_string(self.password)
+            if hashpw(plaintext_password, stored_password) == self.password:
                 return True
         return False
 
@@ -81,17 +75,12 @@ class User(HappyClient):
 
     def set_secret_answer(self, plaintext_secret_answer):
         plaintext_secret_answer = ("".join(plaintext_secret_answer.split())).lower()
-        try:
-            plaintext_secret_answer = plaintext_secret_answer.encode('utf-8')
-        except AttributeError:
-            pass
+        plaintext_secret_answer = encode_string(plaintext_secret_answer)
         self.secret_answer = hashpw(plaintext_secret_answer, gensalt())
+        return super(User, self).save()
 
     def set_password(self, plaintext_password):
-        try:
-            plaintext_password = plaintext_password.encode('utf-8')
-        except AttributeError:
-            pass
+        plaintext_password = encode_string(plaintext_password)
         self.password = hashpw(plaintext_password, gensalt())
         return super(User, self).save()
 
@@ -137,3 +126,11 @@ class Interaction(HappyClient):
 
     def check_user_authentication(self, user, company=None):
         return user.company.pk == self.company.pk or company.pk == self.company.pk
+
+
+def encode_string(string):
+    try:
+        string = string.encode('utf-8')
+    except AttributeError:
+        pass
+    return string
