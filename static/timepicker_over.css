@@ -1,14 +1,10 @@
 .datepicker {
-    width: 45%;
-    min-width: 200px;
     margin: 0 auto;
     display: inline-block;
     padding: .5em;
 }
 
 .timepicker {
-    width: 40%;
-    min-width: 100px;
     margin: 0 auto;
     display: inline-block;
 }
@@ -18,7 +14,7 @@
 }
 
 .bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
-    width: 10px;
+
     color: rgba(255, 255, 255, 0.24) !important;
 }
 

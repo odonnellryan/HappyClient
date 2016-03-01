@@ -13,7 +13,7 @@ def create_tables():
     for table in tables:
         try:
             database.create_table(table)
-        except OperationalError as e:
+        except OperationalError:
             pass
 
 
@@ -64,7 +64,7 @@ def before_request():
 
 
 @app.teardown_request
-def _db_close(exec):
+def _db_close(e):
     if not database.is_closed():
         database.close()
 
